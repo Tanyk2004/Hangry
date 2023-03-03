@@ -3,7 +3,6 @@
 
 ### To do: 
 
-* Set up react project
 * install flask 
 * Install materials UI 
 * Look up sentiment analysis
