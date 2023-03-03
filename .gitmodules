@@ -1,0 +1,3 @@
+[submodule "hangry-backend"]
+	path = hangry-backend
+	url = git@github.com:Tanyk2004/hangry-backend.git
