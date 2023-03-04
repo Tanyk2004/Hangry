@@ -78,7 +78,7 @@ export default function BasicCard(props: Props) {
       }
     }} raised={true} >
       <CardContent>
-        <Typography sx={{ fontSize: 38, fontWeight: 'medium' }} variant='h1' color="text.primary" gutterBottom>
+        <Typography sx={{ fontSize: 25, fontWeight: 'medium' }} variant='h1' color="text.primary" gutterBottom>
           {props.title}
         </Typography>
         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>

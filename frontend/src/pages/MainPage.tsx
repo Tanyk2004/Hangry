@@ -41,11 +41,12 @@ function MainPage() {
                 paddingTop: 2,
             }}>
                 <TextInput></TextInput>
-                <Button variant='contained' sx={{
-                    boxShadow: 10,
-                }}>Done</Button>
-            </Box>
 
+            </Box>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+            }} ></Box>
             <Box sx={{ display: "flex" }} paddingTop={5} paddingBottom={5}>
                 <Box sx={{ width: 30 }}>
                 </Box>
@@ -81,8 +82,6 @@ function MainPage() {
                     </Box>
                 </Box>
             </Box>
-
-            <Button onClick={changeCardWidth}>Click me</Button>
         </Box>
     )
 }
