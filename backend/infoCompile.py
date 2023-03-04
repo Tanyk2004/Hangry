@@ -5,10 +5,14 @@ from nltk.corpus import stopwords
 from nltk import pos_tag
 from bs4 import BeautifulSoup
 import requests
+from selenium import webdriver
+import time
+from selenium.webdriver.common.by import By
 
 hash = {}
 foods = set()
 isInit = False
+loc = ""
 
 def initializeHashMap():
     
@@ -74,10 +78,32 @@ def evalFood(text, strlatitude, strlongitude):
 
     instaData = instacartData(zip, food)
 
-    return output
+    # return output
+    return []
 
 def instacartData(zipCode, food):
-    query = "buy " + food + " near " + zip + " instacart"
+    query = "buy " + food + " near " + zipCode + " instacart"
+
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    browser = webdriver.Chrome(options=options)
+
+    browser.get('https://www.google.com/shopping')
+    search_box = browser.find_element(By.NAME, 'q')
+    search_box.send_keys(query)
+    search_box.submit()
+
+    opts = browser.find_elements(By.CLASS_NAME, 'pF6yef')
+    # print(len(opts))
+    for option in opts:
+        print(option)
+        title = option.find_element(By.CLASS_NAME, 'zZ1as').text
+        price = option.find_element(By.CLASS_NAME, 'bERqtb').text
+        print(title, price)
+
+    time.sleep(10)
+
+instacartData('75012', 'arugula')
 
 
 
