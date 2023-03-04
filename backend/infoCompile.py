@@ -12,7 +12,8 @@ from selenium.webdriver.common.by import By
 hash = {}
 foods = set()
 isInit = False
-loc = ""
+latlat = " "
+longlong = " "
 
 def initializeHashMap():
     
@@ -41,6 +42,15 @@ def getOptions():
     print('hi')
 
 def evalFood(text, strlatitude, strlongitude):
+    return ["Arugula", "14", "$10", "google.com"]
+    global latlat
+    global longlong
+    if latlat == " ":
+        latlat = strlatitude
+        longlong = strlongitude
+    else:
+        strlatitude = latlat
+        strlongitude = longlong
     output = []
 
     # remove spaces from string and convert to lowercase
