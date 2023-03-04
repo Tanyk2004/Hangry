@@ -61,6 +61,7 @@ export default function BasicCard(props: Props) {
       minWidth: props.minWidth,
       minHeight: props.minHeight,
       maxHeight: props.maxHeight,
+      marginTop: 3,
       width: {
         xs: 100, // theme.breakpoints.up('xs')
         sm: 200, // theme.breakpoints.up('sm')
