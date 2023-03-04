@@ -22,14 +22,14 @@ def test_post():
 @app.post('/post-suggestions-with-loc')
 def makeBackendRequestwithLoc():
     todo_data = request.get_json()
-    infoCompile.evalFood(todo_data['name'], todo_data["longitude"], todo_data["latitude"])
-    return {'soimetih' : "something else"},200
+    print(infoCompile.evalFood(todo_data['name'], "", ""))
+    return infoCompile.evalFood(todo_data['name'], "", "") ,200
 
 @app.post('/post-suggestions')
 def makeBackendRequest():
     todo_data = request.get_json()
-    infoCompile.evalFood(todo_data['name'], " ", " ")
-    return {'soimetih' : "something else"},200
+    print(infoCompile.evalFood(todo_data['name'], " ", " "))
+    return infoCompile.evalFood(todo_data['name'], "", ""),200
     
 
 if __name__ == '__main__':

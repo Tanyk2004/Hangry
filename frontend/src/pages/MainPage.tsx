@@ -87,7 +87,7 @@ function MainPage() {
 
     const [classCard, setClassCard] = useState("btn-true")
     const [backEndData, setBackEndData] = useState([]);
-    const [name, setName] = useState("meat")
+    const [name, setName] = useState("")
 
     function callBackend(textinput: string){
         axios.post('http://localhost:5000/post-suggestions',
@@ -130,9 +130,7 @@ function MainPage() {
         }
     }
 
-    if (backEndData.length > 0 ) {
-        return <p>wowww got data from backend</p>
-    }
+    
     function doSomething(arg1:any){
         console.log(arg1)
     }
@@ -154,7 +152,7 @@ function MainPage() {
                 <Box sx={{ display: 'flex', justifyContent: 'center', padding: '15', marginRight: '20' }}>
                     <div>
                         <TextInput functionToCall={callBackend} setClicked = {changeCardBool}
-                        sustainable = {backEndData.length > 0}
+                        sustainable = {backEndData.length == 0}
                         alternative = {backEndData[0]}
                         ></TextInput>
                         

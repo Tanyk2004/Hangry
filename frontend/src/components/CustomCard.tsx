@@ -150,7 +150,7 @@ export default function BasicCard(props: Props) {
       )}
     </Card>
     <>
-    {isClicked && !sustainable &&
+    {isClicked && sustainable &&
       <Button 
       style={{flexGrow: 0, flexShrink: 1, flexBasis: 0, maxHeight: 55, minHeight: 55}}
       variant = "contained"

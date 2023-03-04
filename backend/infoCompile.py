@@ -267,7 +267,7 @@ def singleWordFood(text):
 def initializeHashMap():
     
     # reading database + converting to hashmap
-    df = pd.read_excel('~/Documents/GitHub/Hangry/backend/food_option_names.xlsx')
+    df = pd.read_excel('./food_option_names.xlsx')
     global hash
     for index, row in df.iterrows():
         # # print(row['Food'])

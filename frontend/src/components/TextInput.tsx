@@ -36,6 +36,7 @@ function TextInput(props:Props) {
 
       console.log(inputValue);
       e.preventDefault();
+      
       setInputValues(inputValues.concat(inputValue.trim()));
       setInputValue('');
       console.log(inputValues);
