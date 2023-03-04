@@ -35,6 +35,9 @@ function TextInput() {
         boxShadow: 10,
         textAlign: 'center'
         }}
+        //InputProps={{
+         // disableUnderline: true,
+        //}}
         
         label ="Input Your Shopping List" 
         value = {inputValue}
