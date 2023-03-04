@@ -21,30 +21,34 @@ interface Props {
   setClicked?: any;
   sustainable?: boolean;
   alternative?: string;
+  inputValue: string;
+  setInputValue: any;
+  inputValues: string[];
+  setInputValues: any;
 }
 
 function TextInput(props:Props) {
 
-  const [inputValue, setInputValue] = useState('');
-  const [inputValues, setInputValues] = useState<string[]>([]);
+ 
+  
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === 'Enter' && (e.target as HTMLInputElement).value !== '') {
-      console.log('old: ', inputValues);
       
-      props.functionToCall(inputValue);
+      
+      props.functionToCall(props.inputValue);
 
-      console.log(inputValue);
+      console.log(props.inputValue);
       e.preventDefault();
+
       
-      setInputValues(inputValues.concat(inputValue.trim()));
-      setInputValue('');
-      console.log(inputValues);
+      props.setInputValue('');
+      
     }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue((e.target as HTMLInputElement).value);
+    props.setInputValue((e.target as HTMLInputElement).value);
   };
 
 
@@ -64,7 +68,7 @@ function TextInput(props:Props) {
         }}
         
         label ="Add an Item To Your Shopping List" 
-        value = {inputValue}
+        value = {props.inputValue}
         variant="filled"
         onKeyDown = {(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
         onChange = {handleChange}
@@ -85,7 +89,7 @@ function TextInput(props:Props) {
                   maxWidth = {800}
                   maxHeight = {60}
                 >
-                  {inputValues.map((value, index) => (
+                  {props.inputValues.map((value, index) => (
                     <CSSTransition key={index} names ="list-item" timeout={300}>                       
                        <Card
                         setClicked={props.setClicked}

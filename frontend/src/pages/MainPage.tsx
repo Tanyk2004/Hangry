@@ -88,16 +88,19 @@ function MainPage() {
     const [classCard, setClassCard] = useState("btn-true")
     const [backEndData, setBackEndData] = useState([]);
     const [name, setName] = useState("")
-
+    const [inputValues, setInputValues] = useState<string[]>([]);
+    const [inputValue, setInputValue] = useState('');
     function callBackend(textinput: string){
         axios.post('http://localhost:5000/post-suggestions',
         {"name" : textinput}).then((response) => {
             if (response.status === 200) {
                 console.log(response.data)
                 setBackEndData(response.data)
+                setInputValues(inputValues.concat(inputValue.trim()));
               }
             }, (error) => {
-              console.log(error);
+                alert("Could not add item")
+              //console.log(error);
         })
     }
 
@@ -154,6 +157,10 @@ function MainPage() {
                         <TextInput functionToCall={callBackend} setClicked = {changeCardBool}
                         sustainable = {backEndData.length == 0}
                         alternative = {backEndData[0]}
+                        inputValue = {inputValue}
+                        setInputValue = {setInputValue}
+                        inputValues = {inputValues}
+                        setInputValues = {setInputValues}
                         ></TextInput>
                         
                     </div>
