@@ -10,7 +10,6 @@ import { COLORS } from '../values/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
-import { typeCards } from '../values/enums';
 
 
 // defines a bunch of properties that we can customize for the card
@@ -21,7 +20,7 @@ interface Props {
   minWidth?: number;
   minHeight?: number;
   maxHeight?: number;
-  type: typeCards;
+  contracted: boolean;
 
 }
 
@@ -40,26 +39,16 @@ const customTheme = createTheme({
   },
 });
 
-// creates a styled component for the avatar
-const StyledAvatar = styled(Avatar)`
-  ${({ theme }) => `
-  cursor: pointer;
-  background-color: ${theme.palette.primary.main};
-  transition: ${theme.transitions.create(['background-color', 'transform'], {
-    duration: theme.transitions.duration.standard,
-  })};
-  &:hover {
-    background-color: ${theme.palette.secondary.main};
-    transform: scale(1.3);
-  }
-  `}
-`;
-
 export default function BasicCard(props: Props) {
+
+  let foo = () => {
+    return props.contracted;
+  }
+
   return (
-    <ThemeProvider theme={customTheme}>
-    <Card sx={{ 
-      maxWidth: props.maxWidth,
+
+    <Card sx={{
+      maxWidth: foo() ? 300 : 100,
       minWidth: props.minWidth,
       minHeight: props.minHeight,
       maxHeight: props.maxHeight,
@@ -69,10 +58,11 @@ export default function BasicCard(props: Props) {
         md: 300, // theme.breakpoints.up('md')
         lg: 400, // theme.breakpoints.up('lg')
         xl: 500, // theme.breakpoints.up('xl')
-      }, // This makes the card responsive by setting breakpoints for the width
-      height: {height: '100%'},
-      background: COLORS.card_background,
+      }, // This makes the card responsive by setting responsive widths
+      background: foo() ? COLORS.card_background : COLORS.item_sustainable,
       borderRadius: 3,
+      transition: 'background transform 0.5s ease-in-out',
+      transitionDuration: '0.3s',
       '&:hover': {
         background: COLORS.item_sustainable,
         transition: 'background 0.5s ease-in-out',
@@ -82,12 +72,14 @@ export default function BasicCard(props: Props) {
         <Typography sx={{ fontSize: 38, fontWeight: 'medium' }} variant='h1' color="text.primary" gutterBottom>
           {props.title}
         </Typography>
+        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+          {props.content}
+        </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {props.content}
         </Typography>
       </CardContent>
     </Card>
-    </ThemeProvider>
 
   );
 }
