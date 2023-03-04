@@ -71,14 +71,19 @@ def evalFood(text, strlatitude, strlongitude):
 
     zip = getZIP(strlatitude, strlongitude)
     # query = "buy " + food + " near " + zip
-    
 
-    
+    instaData = instacartData(zip, food)
+
+    return output
+
+def instacartData(zipCode, food):
+    query = "buy " + food + " near " + zip + " instacart"
+
+
 
 def getZIP(latitude, longitude):
-    # ASSUMES PERSON IS IN NORTH AMERICA
     latitude = str(latitude)
-    longitude = str(0 - float(longitude))
+    longitude = str(longitude)
     # query = "" + latitude + " N, " + longitude + " E"
 
     api = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}"
@@ -90,7 +95,7 @@ def getZIP(latitude, longitude):
 
 
 
-getZIP(str(30.2849), str(97.7341))
+# getZIP(str(30.2849), str(97.7341))
     
 
 
@@ -127,7 +132,7 @@ def multiWordFood(text):
         return (postResults + preResults)
     else:
         #TODO IMPLEMENT WEBSCRAPING!
-        return output
+        return (postResults + preResults)
 
 
 
