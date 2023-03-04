@@ -17,3 +17,8 @@
  * CORS
  * axios (front end)
  * materials-ui (front end)
+ * selenium (backend)
+ * time (backend)
+ * openpyxl (backend)
+ * pandas (backend)
+ * BeautifulSoup4 (backend)
