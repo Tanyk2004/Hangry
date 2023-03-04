@@ -10,10 +10,11 @@ import Slide from '@mui/material/Slide';
 import { useState, useEffect } from 'react'
 import '../styles/MainPage.css'
 import Grid from '@mui/material/Grid';
+import axios from 'axios';
 import SideBar from '../components/SideBar';
 
 
-function DoGeolocation({setBackEndData} : any) {
+function DoGeolocation({setBackEndData, name} : any) {
     var options = {
         enableHighAccuracy: true,
         timeout: 5000,
@@ -28,11 +29,17 @@ function DoGeolocation({setBackEndData} : any) {
         console.log(`Longitude: ${crd.longitude}`);
         console.log(`More or less ${crd.accuracy} meters.`);
         //axios call here
-        
-        const axiosResp:any[] = [];
-
-        setBackEndData(axiosResp);
-      }
+        axios.post('http://localhost:5000/post-suggestions', 
+        {"name" : "name", "longitude" : crd.longitude, "latitude" : crd.latitude}).then((response) => {
+            if (response.status === 200) {
+                console.log(response.data)
+                setBackEndData(response.data)
+              }
+            }, (error) => {
+              console.log(error);
+        });
+    }
+    
       
     function errors(err: any) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -66,6 +73,7 @@ function DoGeolocation({setBackEndData} : any) {
     componentDidMount()
 }
 
+
 function MainPage() {
     const [cardWidth, setCardWidth] = useState(100)
     const [cardContracted, changeCardBool] = useState(false)
@@ -79,9 +87,22 @@ function MainPage() {
 
     const [classCard, setClassCard] = useState("btn-true")
     const [backEndData, setBackEndData] = useState([]);
+    const [name, setName] = useState("meat")
+
+    function callBackend(textinput: string){
+        axios.post('http://localhost:5000/post-suggestions',
+        {"name" : textinput}).then((response) => {
+            if (response.status === 200) {
+                console.log(response.data)
+                setBackEndData(response.data)
+              }
+            }, (error) => {
+              console.log(error);
+        })
+    }
 
     useEffect(() => {
-        DoGeolocation(setBackEndData)
+        DoGeolocation({setBackEndData, name})
     }, [setBackEndData])
 
     let changeCardWidth = () => {
@@ -112,6 +133,9 @@ function MainPage() {
     if (backEndData.length > 0 ) {
         return <p>wowww got data from backend</p>
     }
+    function doSomething(arg1:any){
+        console.log(arg1)
+    }
 
     return (
         <div style={styles}>
@@ -129,7 +153,7 @@ function MainPage() {
             <Box >
                 <Box sx={{ display: 'flex', justifyContent: 'center', padding: '15', marginRight: '20' }}>
                     <div>
-                        <TextInput></TextInput>
+                        <TextInput functionToCall={callBackend}></TextInput>
                         
                     </div>
                     <SideBar></SideBar>

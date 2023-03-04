@@ -22,8 +22,8 @@ interface Props {
   minHeight?: number;
   maxHeight?: number;
   contracted: boolean;
-  sustainable: boolean;
-  alternative: string;
+  sustainable?: boolean;
+  alternative?: string;
 }
 
 

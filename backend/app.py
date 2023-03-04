@@ -4,10 +4,7 @@ import infoCompile
 
 app = Flask(__name__)
 CORS(app)
-# Members API route
-@app.route('/members')
-def get_members():
-    return {"members": "test", "members2": "test2"}
+
 
 @app.route('/test-post', methods = ['POST'])
 def test_post():
@@ -19,6 +16,13 @@ def test_post():
         print("dictionary error")
     return 'hello world i hate programming', 200
 
+@app.post('/post-suggestions')
+def makeBackendRequest():
+    todo_data = request.get_json()
+    print(infoCompile.evalFood(todo_data['name'], todo_data['longitude'], todo_data['latitude']))
+    return {'msg': 'hello world i hate programming'},200
+    
+
 if __name__ == '__main__':
     app.run(debug=True)
 
@@ -29,5 +33,5 @@ if __name__ == '__main__':
     """
     infoCompile.initializeHashMap()
 
-    
+
     print("Your server is running!")

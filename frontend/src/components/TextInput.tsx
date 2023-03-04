@@ -16,8 +16,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Container from "@mui/material/Container";
 
+interface Props {
+  functionToCall: any;
+}
 
-function TextInput() {
+function TextInput(props:Props) {
 
   const [inputValue, setInputValue] = useState('');
   const [inputValues, setInputValues] = useState<string[]>([]);
@@ -25,6 +28,9 @@ function TextInput() {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === 'Enter' && (e.target as HTMLInputElement).value !== '') {
       console.log('old: ', inputValues);
+      
+      props.functionToCall(inputValue);
+
       console.log(inputValue);
       e.preventDefault();
       setInputValues(inputValues.concat(inputValue.trim()));
@@ -84,8 +90,8 @@ function TextInput() {
                         maxWidth = {800} 
                         maxHeight = {55}
                         contracted = {true}
-                        sustainable = {} //input this from backend
-                        alternative = {} //input this from backend
+                        // sustainable = {} //input this from backend
+                        // alternative = {} //input this from backend
 
                       ></Card>
                     </CSSTransition>

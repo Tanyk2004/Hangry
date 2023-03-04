@@ -14,10 +14,10 @@ import { wrap } from 'module';
 
 interface Props {
     title?: string;
-    firstAlternative: string;
-    firstImpact: string;
-    firstPrice: string;
-    firstLink: string;
+    firstAlternative?: string;
+    firstImpact?: string;
+    firstPrice?: string;
+    firstLink?: string;
 
     secondAlternative?: string;
     secondImpact?: string;
