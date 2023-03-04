@@ -19,6 +19,8 @@ import Container from "@mui/material/Container";
 interface Props {
   functionToCall: any;
   setClicked?: any;
+  sustainable?: boolean;
+  alternative?: string;
 }
 
 function TextInput(props:Props) {
@@ -92,8 +94,8 @@ function TextInput(props:Props) {
                         maxWidth = {800} 
                         maxHeight = {55}
                         contracted = {true}
-                        // sustainable = {} //input this from backend
-                        // alternative = {} //input this from backend
+                        sustainable = {props.sustainable} //input this from backend
+                        alternative = {props.alternative} //input this from backend
 
                       ></Card>
                     </CSSTransition>

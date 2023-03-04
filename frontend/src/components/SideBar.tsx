@@ -12,6 +12,23 @@ import cardClicked from '../components/CustomCard'
 
 interface Props {
     isClicked : boolean;
+    title?: string;
+    firstAlternative?: string;
+    firstImpact?: string;
+    firstPrice?: string;
+    firstLink?: string;
+
+    secondAlternative?: string;
+    secondImpact?: string;
+    secondPrice?: string;
+    secondLink?: string;
+
+    //content?: string;
+    maxWidth?: number;
+    minWidth?: number;
+    minHeight?: number;
+    maxHeight?: number;
+    contracted?: boolean;
 }
 
 function SideBar(props:Props) {
@@ -27,6 +44,10 @@ function SideBar(props:Props) {
                         {
                             <div >
                                 <Card title="Suggested Alternatives to the Product"
+                                    firstAlternative = {props.firstAlternative}
+                                    firstImpact = {props.firstImpact}
+                                    firstPrice = {props.firstPrice}
+                                    firstLink = {props.firstLink}
                                     minHeight={500}
                                     maxHeight={500}
                                 ></Card>
