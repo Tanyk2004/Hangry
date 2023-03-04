@@ -5,7 +5,9 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
+import Paper from '@mui/material/Paper';
+import { COLORS } from '../values/colors';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 const bull = (
   <Box
     component="span"
@@ -15,28 +17,36 @@ const bull = (
   </Box>
 );
 
-export default function BasicCard() {
+interface Props {
+  title: string;
+  description: string;
+  content: string;
+}
+
+export default function BasicCard(props: Props) {
+
+
+
   return (
-    <Card sx={{ minWidth: 275 }}>
+
+    <Card sx={{
+      maxWidth: 200,
+      background: COLORS.card_background,
+      borderRadius: 3,
+      '&:hover': {
+        background: COLORS.item_sustainable,
+        transition: 'background 0.5s ease-in-out',
+      }
+    }} raised={true} >
       <CardContent>
+      <Typography sx={{ fontSize: 38, fontWeight: 'medium' }} color="text.primary" gutterBottom>
+          {props.title}
+        </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
-        </Typography>
-        <Typography variant="h5" component="div">
-          be{bull}nev{bull}o{bull}lent
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+          {props.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
+
   );
 }

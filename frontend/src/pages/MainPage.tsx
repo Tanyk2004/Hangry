@@ -4,7 +4,7 @@ import TextInput from '../components/TextInput'
 function MainPage() {
   return (
     <div>
-      <Card></Card>
+      <Card title="Generic Title" description="This is the description" content ="Something random"></Card>
       <TextInput></TextInput>
     </div>
   )

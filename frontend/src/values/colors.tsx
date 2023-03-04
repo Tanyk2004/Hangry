@@ -4,4 +4,5 @@ export const COLORS = {
     item_sustainable: '#62DF85',
     item_unsustainable: '#FF0000',
     done_background: '#323232',
+    black: '#000000',
 }
