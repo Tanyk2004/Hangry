@@ -5,3 +5,15 @@
     * we install flask-cors
     * we import CORS from flask_cors
     * we add CORS(app) to the bottom of the app.py file
+
+* How to revert Github to a previous commit:
+- git reset --hard <commit hash>
+- git push --force
+
+
+# Libraries Installed
+ * flask-cors
+ * flask
+ * CORS
+ * axios (front end)
+ * materials-ui (front end)
