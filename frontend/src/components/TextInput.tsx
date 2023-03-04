@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 function TextInput() {
 
-  const [inputValue, setInputValue] = useState('socks');
+  const [inputValue, setInputValue] = useState('');
   const [inputValues, setInputValues] = useState<string[]>([]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -35,9 +35,6 @@ function TextInput() {
         boxShadow: 10,
         textAlign: 'center'
         }}
-        //InputProps={{
-         // disableUnderline: true,
-        //}}
         
         label ="Input Your Shopping List" 
         value = {inputValue}
