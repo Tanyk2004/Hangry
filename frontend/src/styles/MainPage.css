@@ -1,29 +1,17 @@
 .btn-true {
     background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
     transition-duration: 1s;
     transform: scale(1.5);
 }
 
 .btn-false {
     background-color: #af4c4c;
-    border: none;
-    color: rgb(255, 255, 255);
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
     transition-duration: 1s;
     transform: scale(1);
+}
+
+
+.sideBarDiv{ 
+    width: max-content;
+    height: 100vh;
 }

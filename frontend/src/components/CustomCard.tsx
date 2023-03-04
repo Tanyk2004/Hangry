@@ -21,7 +21,6 @@ interface Props {
   minHeight?: number;
   maxHeight?: number;
   contracted: boolean;
-
 }
 
 /**
@@ -50,14 +49,10 @@ const customTheme = createTheme({
 
 export default function BasicCard(props: Props) {
 
-  let foo = () => {
-    return props.contracted;
-  }
-
   return (
 
     <Card sx={{
-      maxWidth: foo() ? 300 : 100,
+      maxWidth: props.maxWidth,
       minWidth: props.minWidth,
       minHeight: props.minHeight,
       maxHeight: props.maxHeight,
@@ -69,7 +64,7 @@ export default function BasicCard(props: Props) {
         lg: 400, // theme.breakpoints.up('lg')
         xl: 500, // theme.breakpoints.up('xl')
       }, // This makes the card responsive by setting responsive widths
-      background: foo() ? COLORS.card_background : COLORS.item_sustainable,
+      background: COLORS.card_background,
       borderRadius: 3,
       transition: 'background transform 0.5s ease-in-out',
       transitionDuration: '0.3s',
