@@ -36,7 +36,7 @@ function TextInput() {
         textAlign: 'center'
         }}
         
-        label ="Input Your Shopping List" 
+        label ="Add an Item To Your Shopping List" 
         value = {inputValue}
         variant="outlined" 
         onKeyDown = {(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
