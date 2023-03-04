@@ -1,33 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import axios from 'axios';
-import './App.css';
-
+import React, {useState, useEffect} from 'react'
+import axios from 'axios'
 function App() {
+  const [data, setData] = useState({
+    name: "Someone random",
+    age: 0,
+    date: "",
+    programming:"",
+  })
+
+  useEffect(() => {
+    axios.post('http://localhost:5000/test-post', data).then((response) => {
+
+      if (response.status === 200) {
+        console.log(response.data)
+      }
+    }, (error) => {
+      console.log(error);
+    })   
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button>Click me</button>
     </div>
-  );
+  )
 }
 
-function getServerData() {
-  axios.get('http://localhost:3000/api/v1/').then((res) => {
-    console.log(res);
-  });
-}
-
-export default App;
+export default App
