@@ -153,10 +153,10 @@ function MainPage() {
             <Box >
                 <Box sx={{ display: 'flex', justifyContent: 'center', padding: '15', marginRight: '20' }}>
                     <div>
-                        <TextInput functionToCall={callBackend}></TextInput>
+                        <TextInput functionToCall={callBackend} setClicked = {changeCardBool}></TextInput>
                         
                     </div>
-                    <SideBar></SideBar>
+                    <SideBar isClicked = {cardContracted}></SideBar>
                 </Box>
             </Box>
         </div>

@@ -29,7 +29,7 @@ interface Props {
     minWidth?: number;
     minHeight?: number;
     maxHeight?: number;
-    contracted: boolean;
+    contracted?: boolean;
   }
 
 
@@ -60,10 +60,7 @@ const customTheme = createTheme({
       borderRadius: 3,
       transition: 'background transform 0.5s ease-in-out',
       transitionDuration: '0.3s',
-      '&:hover': {
-        background: COLORS.item_sustainable,
-        transition: 'background 0.5s ease-in-out',
-      }
+      
     }} raised={true} >
       <CardContent>
         <Typography sx={{ fontSize: 25, fontWeight: 'medium' }} variant='h1' color="text.primary" gutterBottom>
