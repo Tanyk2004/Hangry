@@ -22,7 +22,6 @@ interface Props {
   minHeight?: number;
   maxHeight?: number;
   contracted: boolean;
-
 }
 
 
@@ -96,7 +95,7 @@ export default function BasicCard(props: Props) {
         lg: 400, // theme.breakpoints.up('lg')
         xl: 500, // theme.breakpoints.up('xl')
       }, // This makes the card responsive by setting responsive widths
-      background: foo() ? COLORS.card_background : COLORS.item_sustainable,
+      background: COLORS.card_background,
       borderRadius: 3,
       transition: 'background transform 0.1s ease-in-out',
       transitionDuration: '0.1s',
