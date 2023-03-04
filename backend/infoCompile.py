@@ -42,7 +42,6 @@ def getOptions():
     print('hi')
 
 def evalFood(text, strlatitude, strlongitude):
-    return ["Arugula", "14", "$10", "google.com"]
     global latlat
     global longlong
     if latlat == " ":
@@ -86,10 +85,10 @@ def evalFood(text, strlatitude, strlongitude):
     zip = getZIP(strlatitude, strlongitude)
     # query = "buy " + food + " near " + zip
 
-    instaData = instacartData(zip, food)
+    # instaData = instacartData(zip, food)
 
     # return output
-    return ["Arugula", "14", "$10", "google.com"]
+    return output + ["instacart.com", "$3.00"]
 
 def instacartData(zipCode, food):
     query = "buy " + food + " near " + zipCode + " instacart"
