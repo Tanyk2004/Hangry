@@ -57,66 +57,6 @@ def findAlts(text):
         output = multiWordFood(text)
         return output
 
-
- 
-
-    query = "sustainable alternatives to " + text
-    search = f"https://www.google.com/search?q=" + query
-    results = requests.get(search)
-
-    soup = BeautifulSoup(results.content, "html.parser")
-    allText = "".join([tag.text for tag in soup.find_all()])
-    # print(allText)
-
-    links = soup.find_all('a')
-
-    # allTitles = ""
-
-    # for link in links:
-    #     allTitles += link.get_text()
-    #     allTitles += " "
-
-    # print(allTitles)
-    allTitles = allText
-
-    tokens = nltk.word_tokenize(allTitles)
-    tagged = nltk.pos_tag(tokens)
-
-    grammar = r"""
-    NP: {<DT|PRP\$>?<JJ>*<NN>}   # chunk noun phrases
-        {<NNP>+}                # chunk named entities
-    """
-
-    chunk_parser = nltk.RegexpParser(grammar)
-    chunks = chunk_parser.parse(tagged)
-
-    text1 = text[0].upper() + text[1:]
-
-    print(text1 + ": " + str(hash.get(text1)))
-
-    for chunk in chunks.subtrees():
-        if chunk.label() == "NP":
-            posAlt = " ".join(word for word, posAlt in chunk.leaves())
-            posAlt = posAlt[0].upper() + posAlt[1:]
-            posAlt = posAlt.rstrip()
-
-            if posAlt != text1 and hash.get(posAlt.rstrip()) is not None and hash.get(posAlt) < hash.get(text1):
-                # print("Success: " + posAlt)
-                print(posAlt + ": " + str(hash.get(posAlt)))
-            else:
-                posAlt += foodCat
-                if posAlt != text1 and hash.get(posAlt.rstrip()) is not None:
-                # print("Success: " + posAlt)
-                    print(posAlt + ": " + str(hash.get(posAlt)))
-            # print(posAlt)
-
-            # elif posAlt in text:
-            #     print("Failed: " + posAlt)
-
-            # elif not ("." in posAlt) and not ("/" in posAlt) and not ("=" in posAlt) and not ("\\" in posAlt):
-            #     print(posAlt)
-
-
 def multiWordFood(text):
     # subdivide by spacing
     index = text.find(" ")
@@ -138,7 +78,7 @@ def multiWordFood(text):
     elif len(postResults + preResults) > 0:
         return (postResults + preResults)
     else:
-        #TODO IMPLEMENT WEBSSCRAPING!
+        #TODO IMPLEMENT WEBSCRAPING!
         print('hi')
 
 
@@ -171,7 +111,7 @@ def singleWordFood(text):
             if store:
                 if link.get_text().rstrip().lstrip().find(" ") != -1:
                     sortedLinks.append(link.get("href"))
-                    linkText += link.get_text()
+                    linkText += link.get_text() + " "
                 else:
                     store = False
                     linkText += link.get_text()
@@ -183,7 +123,7 @@ def singleWordFood(text):
                 store = True
 
     # print(allText)
-    # allText += linkText
+    allText += " " + linkText
 
     tokens = nltk.word_tokenize(allText)
     tagged = nltk.pos_tag(tokens)
@@ -201,14 +141,20 @@ def singleWordFood(text):
     for chunk in chunks.subtrees():
         if chunk.label() == "NP":
             posAlt = " ".join(word for word, posAlt in chunk.leaves())
-            posAlt = posAlt[0].upper() + posAlt[1:]
+            posAlt = posAlt[0].upper() + posAlt[1:].lower()
             posAlt = posAlt.rstrip()
             posAlt = posAlt.lstrip()
-            print(posAlt)
-            time.
+            
 
-            # if posAlt != formattedText and hash.get(posAlt) is not None:
-            #     output.append(posAlt)
+            if posAlt != formattedText and hash.get(posAlt) is not None:
+                if (posAlt not in output):
+                    output.append(posAlt)
+                # print(posAlt)
+    if len(output) != 0:
+        return output
+    else:
+        # TODO: get wikipediaa scraping done
+        return output
 
 
 
