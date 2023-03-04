@@ -174,7 +174,7 @@ def evalFood(text, strlatitude, strlongitude):
     alts = findAlts(text)
     print(alts)
     textFormatted = text[0].upper() + text[1:].lower()
-
+    zip = getZIP(strlatitude, strlongitude)
     curFoot = hash.get(textFormatted)
 
     lowFoot = curFoot
@@ -185,6 +185,7 @@ def evalFood(text, strlatitude, strlongitude):
         if hash.get(i) < lowFoot:
             food = i
             lowFoot = hash.get(i)
+        
     
     if lowFoot == curFoot:
         return output
@@ -195,10 +196,13 @@ def evalFood(text, strlatitude, strlongitude):
     # latitude = int(strlatitude)
     # longitude = int(strlongitude)
 
-    zip = getZIP(strlatitude, strlongitude)
+    
     # query = "buy " + food + " near " + zip
 
-    instaData = instacartData(zip, food)
+    print(zip)
+    print(food)
+    # instaData = instacartData(zip, food)
+    instaData = ["instacart.com", "$3.00"]
 
     output = output + instaData
 
@@ -207,7 +211,8 @@ def evalFood(text, strlatitude, strlongitude):
 
 def instacartData(zipCode, food):
     query = "buy " + food + " near " + zipCode + " instacart"
-
+    print(query)
+    # browser.quit()
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     browser = webdriver.Chrome(options=options)
@@ -263,7 +268,7 @@ def getZIP(latitude, longitude):
 
 initializeHashMap()
 print(evalFood("beef", str(30.2849), str(-97.7341)))
-# print(instacartData("75012", "tofu"))
+# print(instacartData("78712", "Lentils"))
 # print(getZIP(str(30.2849), str(-97.7341)))
 # print(findAlts("beef"))
 # print(findAlts("olive oil"))
