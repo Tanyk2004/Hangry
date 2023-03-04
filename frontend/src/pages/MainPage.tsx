@@ -64,6 +64,7 @@ function MainPage() {
                 <Box sx={{ display: 'flex', justifyContent: 'center', padding: '15', marginRight: '20' }}>
                     <div>
                         <TextInput></TextInput>
+                        
                     </div>
                     <SideBar></SideBar>
                 </Box>
