@@ -45,7 +45,8 @@ function TextInput() {
         sx={{
           width: { md: 800 },
           "& .MuiInputBase-root": {
-            height: 55
+            height: 55,
+            background: 'white'
           },
         
         boxShadow: 10,
@@ -54,7 +55,7 @@ function TextInput() {
         
         label ="Add an Item To Your Shopping List" 
         value = {inputValue}
-        variant="outlined" 
+        variant="filled" 
         onKeyDown = {(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
         onChange = {handleChange}
         
@@ -66,11 +67,6 @@ function TextInput() {
                 mt : 1,
                 width: 300,
                 height: 300,
-                //backgroundColor: 'primary.dark',
-                //'&:hover': {
-                //backgroundColor: 'primary.main',
-                //opacity: [0.9, 0.8, 0.7],
-              //}
               }}>
                 <div>
                 <TransitionGroup 
@@ -84,9 +80,9 @@ function TextInput() {
                        <Card
                         title = {value}
                         minWidth = {800}
-                        minHeight = {50}
+                        minHeight = {55}
                         maxWidth = {800} 
-                        maxHeight = {50}
+                        maxHeight = {55}
                         contracted = {true}
                       ></Card>
                       </div>

@@ -16,6 +16,10 @@ function MainPage() {
     const [cardWidth, setCardWidth] = useState(100)
     const [cardContracted, changeCardBool] = useState(false)
     const containerRef = React.useRef(null);
+    const bgColor = "#B1E3E6";
+    const styles = {
+        backgroundColor: bgColor
+    };
 
     let changeCardWidth = () => {
         if (!cardContracted) {
@@ -28,6 +32,7 @@ function MainPage() {
     }
 
     return (
+        <div style = {styles}>
         <Box>
             <Box sx={{
                 display: 'flex',
@@ -83,6 +88,7 @@ function MainPage() {
                 </Box>
             </Box>
         </Box>
+    </div>
     )
 }
 
