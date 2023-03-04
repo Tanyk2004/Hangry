@@ -29,7 +29,7 @@ function DoGeolocation({setBackEndData, name} : any) {
         console.log(`Longitude: ${crd.longitude}`);
         console.log(`More or less ${crd.accuracy} meters.`);
         //axios call here
-        axios.post('http://localhost:5000/post-suggestions', 
+        axios.post('http://localhost:5000/post-suggestions-with-loc', 
         {"name" : "name", "longitude" : crd.longitude, "latitude" : crd.latitude}).then((response) => {
             if (response.status === 200) {
                 console.log(response.data)
