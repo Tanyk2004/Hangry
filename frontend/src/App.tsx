@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+import axios from 'axios';
 import './App.css';
 
 function App() {
@@ -21,6 +22,12 @@ function App() {
       </header>
     </div>
   );
+}
+
+function getServerData() {
+  axios.get('http://localhost:3000/api/v1/').then((res) => {
+    console.log(res);
+  });
 }
 
 export default App;
