@@ -52,10 +52,17 @@ const customTheme = createTheme({
 export default function BasicCard(props: Props) {
 
   const [isClicked, setIsClicked] = useState(false);
+  const [showButton, setShowButton] = useState(true);
+
+  const handleButtonClick = () => {
+    setShowButton(!showButton);
+    setIsClicked(!isClicked);
+  }
 
   const handleClick = () => {
     console.log(`Handling click: ${!isClicked}`)
     setIsClicked(!isClicked);
+    setShowButton(!showButton);
   };
 
   let foo = () => {
@@ -114,11 +121,27 @@ export default function BasicCard(props: Props) {
         </CardActions>
       )}
     </Card>
-    {isClicked &&
-      <Button style={{flexGrow: 0, flexShrink: 1, flexBasis: 0}}>Hello</Button>
+    <>
+    {isClicked && showButton &&
+      <Button 
+      style={{flexGrow: 0, flexShrink: 1, flexBasis: 0, maxHeight: 55, minHeight: 55}}
+      variant = "contained"
+      sx={{ bgcolor: COLORS.item_sustainable, boxShadow:10 }}
+      onClick={handleButtonClick}
+      >
+        ACCEPT
+      </Button>
+      
     }
-    {isClicked &&
-      <Button style={{flexGrow: 0, flexShrink: 1, flexBasis: 0}}>Delete</Button>
+    </>
+    {isClicked && showButton &&
+      <Button style={{flexGrow: 0, flexShrink: 1, flexBasis: 0, maxHeight: 55, minHeight: 55}}
+      variant = "contained"
+      sx={{ bgcolor: COLORS.item_unsustainable }}
+      onClick = {handleButtonClick}
+      >
+        REJECT
+      </Button>
     }
     </div>
 
