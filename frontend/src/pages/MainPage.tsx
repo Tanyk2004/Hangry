@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Slide from '@mui/material/Slide';
 import { useState, useEffect } from 'react'
+import '../styles/MainPage.css'
 
 
 
@@ -20,17 +21,31 @@ function MainPage() {
     const styles = {
         backgroundColor: bgColor
     };
-
+    const [classCard, setClassCard] = useState("btn-true")
     let changeCardWidth = () => {
         if (!cardContracted) {
             setCardWidth(100)
+            
             changeCardBool(true)
+            
         } else {
             setCardWidth(300)
+            
             changeCardBool(false)
+            
         }
     }
-
+let changeClass = () => {
+        if (cardContracted) {
+            setClassCard("btn-true")
+            console.log(classCard)
+            changeCardBool(true)
+        } else {
+            setClassCard("btn-false")
+            console.log(classCard)
+            changeCardBool(false)
+        }
+}
     return (
         <div style = {styles}>
         <Box>
@@ -45,22 +60,33 @@ function MainPage() {
                 fontWeight: 520, }} 
                 >SHOPGRADE</Typography>
             </Box>
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                paddingTop: 2,
-            }}>
-                <TextInput></TextInput>
+            <Box sx={{ display: 'flex' }}>
 
+                <Box sx={{
+                    display: 'flex',
+                    paddingTop: 2,
+                    flexGrow: 1,
+                    transform: 'translateX(50%)',
+                }}>
+                    <TextInput></TextInput>
+                </Box>
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexGrow: 0.1,
+                }} >
+                    <Button variant="contained"
+                        className='btn-true'
+                        color="primary"
+                        size="large"
+                        onClick={changeClass}
+                        sx={{ marginTop: 2, marginBottom: 2, flexGrow: 0.2, maxHeight: 50 }}>DONE</Button>
+                </Box>
             </Box>
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'center',
-            }} ></Box>
             <Box sx={{ display: "flex" }} paddingTop={5} paddingBottom={5}>
                 <Box sx={{ width: 30 }}>
                 </Box>
-                <Box sx={{ flexGrow: 1.5, alignItems: 'center' }} >
+                <Box sx={{ flexGrow: 1.5, alignItems: 'center' }} className = {classCard}>
                     <Card title="Card left"
                         content="Something random"
                         maxWidth={cardWidth}
@@ -78,8 +104,9 @@ function MainPage() {
                         />
                         <Slide direction="left" in={cardContracted} container={containerRef.current}>
                             {
-                                <div>
-                                    <Card title="Card left" contracted={true}
+                                <div >
+                                    <Card title="Card left" 
+                                        contracted={true}
                                         minHeight={100}
                                         maxHeight={100}
                                         maxWidth={100}
