@@ -349,7 +349,7 @@ def getZIP(latitude, longitude):
     return zip
 
 initializeHashMap()
-print(evalFood("beef", str(30.2849), str(-97.7341)))
+print(evalFood("olive oil", str(30.2849), str(-97.7341)))
 # # print(instacartData("78712", "Lentils"))
 # # print(getZIP(str(30.2849), str(-97.7341)))
 # # print(findAlts("beef"))
