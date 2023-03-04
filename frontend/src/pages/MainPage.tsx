@@ -40,10 +40,10 @@ function MainPage() {
             }}>
                 <Typography 
                 variant="h1" 
-                style={{ fontFamily: 'sans-serif', 
+                style={{ 
                 fontSize: '64px', 
-                fontWeight: 520, 
-                fontStyle: 'italic'}} >SHOPGRADE</Typography>
+                fontWeight: 520, }} 
+                >SHOPGRADE</Typography>
             </Box>
             <Box sx={{
                 display: 'flex',
