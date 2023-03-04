@@ -70,13 +70,13 @@ function TextInput() {
               }}>
                 <div>
                 <TransitionGroup 
-                component="div" 
-                style={{ listStyle: 'none', margin: 0, padding: 0 }}
-                maxWidth = {800}
-                maxHeight = {60}>
+                  component="div" 
+                  style={{ listStyle: 'none', margin: 0, padding: 0 }}
+                  maxWidth = {800}
+                  maxHeight = {60}
+                >
                   {inputValues.map((value, index) => (
                     <CSSTransition key={index} names ="list-item" timeout={300}>                       
-                       <div>
                        <Card
                         title = {value}
                         minWidth = {800}
@@ -84,8 +84,8 @@ function TextInput() {
                         maxWidth = {800} 
                         maxHeight = {55}
                         contracted = {true}
+                        description = {'oh boy do i love coding'}
                       ></Card>
-                      </div>
                     </CSSTransition>
                   ))}
                 </TransitionGroup>
