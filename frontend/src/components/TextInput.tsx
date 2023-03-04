@@ -84,7 +84,9 @@ function TextInput() {
                         maxWidth = {800} 
                         maxHeight = {55}
                         contracted = {true}
-                        description = {'oh boy do i love coding'}
+                        sustainable = {} //input this from backend
+                        alternative = {} //input this from backend
+
                       ></Card>
                     </CSSTransition>
                   ))}

@@ -14,7 +14,17 @@ import { wrap } from 'module';
 
 interface Props {
     title?: string;
-    content?: string;
+    firstAlternative: string;
+    firstImpact: string;
+    firstPrice: string;
+    firstLink: string;
+
+    secondAlternative?: string;
+    secondImpact?: string;
+    secondPrice?: string;
+    secondLink?: string;
+
+    //content?: string;
     maxWidth?: number;
     minWidth?: number;
     minHeight?: number;
@@ -60,10 +70,16 @@ const customTheme = createTheme({
           {props.title}
         </Typography>
         <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-          {props.content}
+          {props.firstAlternative}
         </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {props.content}
+        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+          {props.firstImpact}
+        </Typography>
+        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+          {props.firstPrice}
+        </Typography>
+        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+          {props.firstLink}
         </Typography>
       </CardContent>
     </Card>
