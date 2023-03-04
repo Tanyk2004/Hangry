@@ -1,14 +1,25 @@
 import React from 'react'
 import TextField from '@mui/material/TextField';
-import { shadows } from '@mui/system';
-import { spacing } from '@mui/system';
+import { useState } from 'react';
 
 function TextInput() {
-  const [value, setValue] = React.useState('');
-  const inputLabelProps = {
-    style: {
-      textAlign: 'left',
-    },
+
+  const [inputValue, setInputValue] = useState('socks');
+  const [inputValues, setInputValues] = useState<string[]>([]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === 'Enter' && (e.target as HTMLInputElement).value !== '') {
+      console.log('old: ', inputValues);
+      console.log(inputValue);
+      e.preventDefault();
+      setInputValues(inputValues.concat(inputValue.trim()));
+      setInputValue('');
+      console.log(inputValues);
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue((e.target as HTMLInputElement).value);
   };
 
   return (
@@ -22,16 +33,23 @@ function TextInput() {
           },
         
         boxShadow: 10,
-        //borderRadius:4,
-        pl: '10',
         textAlign: 'center'
         }}
-        //InputProps={{
-         // disableUnderline: true,
-        //}}
         
         label ="Input Your Shopping List" 
-        variant="outlined" />
+        value = {inputValue}
+        variant="outlined" 
+        onKeyDown = {(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
+        onChange = {handleChange}
+        
+        />
+
+        <TextField value={inputValues}></TextField>
+        {/* <ul>
+          {inputValues.map((value, index) => (
+              <li key={index}>{value}</li>
+          ))}
+        </ul> */}
     </div>
   );
 }
