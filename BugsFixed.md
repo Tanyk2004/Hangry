@@ -22,3 +22,6 @@
  * openpyxl (backend)
  * pandas (backend)
  * BeautifulSoup4 (backend)
+ * nltk (backend)
+ * requests (backend)
+ * certifi (backend)
