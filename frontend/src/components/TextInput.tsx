@@ -22,13 +22,10 @@ function TextInput() {
           },
         
         boxShadow: 10,
-        //borderRadius:4,
         pl: '10',
         textAlign: 'center'
         }}
-        //InputProps={{
-         // disableUnderline: true,
-        //}}
+        
         
         label ="Input Your Shopping List" 
         variant="outlined" />
