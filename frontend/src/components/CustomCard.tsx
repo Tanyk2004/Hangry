@@ -53,10 +53,21 @@ export default function BasicCard(props: Props) {
 
   const [isClicked, setIsClicked] = useState(false);
   const [showButton, setShowButton] = useState(true);
+  const [title, setTitle] = useState(props.title);
+
+  const sustainable = false; //get this boolean from backend
+  const color = sustainable ? COLORS.item_sustainable:COLORS.item_unsustainable;
+  const [thisColor, setColor] = useState(color)
 
   const handleButtonClick = () => {
     setShowButton(!showButton);
     setIsClicked(!isClicked);
+  }
+  const handleButtonClickAccept = () => {
+    setShowButton(!showButton);
+    setIsClicked(!isClicked);
+    setTitle('reset') //input new title from backend
+    setColor(COLORS.item_sustainable);
   }
 
   const handleClick = () => {
@@ -95,7 +106,7 @@ export default function BasicCard(props: Props) {
         lg: 400, // theme.breakpoints.up('lg')
         xl: 500, // theme.breakpoints.up('xl')
       }, // This makes the card responsive by setting responsive widths
-      background: COLORS.card_background,
+      background: thisColor,
       borderRadius: 3,
       transition: 'background transform 0.1s ease-in-out',
       transitionDuration: '0.1s',
@@ -109,7 +120,7 @@ export default function BasicCard(props: Props) {
     >
       <CardContent>
         <Typography sx={{ fontSize: 25, fontWeight: 'medium' }} variant='h1' color="text.primary" gutterBottom>
-          {props.title}
+          {title}
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {props.description}
@@ -122,19 +133,19 @@ export default function BasicCard(props: Props) {
       )}
     </Card>
     <>
-    {isClicked && showButton &&
+    {isClicked &&
       <Button 
       style={{flexGrow: 0, flexShrink: 1, flexBasis: 0, maxHeight: 55, minHeight: 55}}
       variant = "contained"
       sx={{ bgcolor: COLORS.item_sustainable, boxShadow:10 }}
-      onClick={handleButtonClick}
+      onClick={handleButtonClickAccept}
       >
         ACCEPT
       </Button>
       
     }
     </>
-    {isClicked && showButton &&
+    {isClicked &&
       <Button style={{flexGrow: 0, flexShrink: 1, flexBasis: 0, maxHeight: 55, minHeight: 55}}
       variant = "contained"
       sx={{ bgcolor: COLORS.item_unsustainable }}
