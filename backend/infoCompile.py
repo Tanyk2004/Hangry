@@ -36,7 +36,9 @@ def isHashInit():
 def getOptions():
     print('hi')
 
-def evalFood(text):
+def evalFood(text, strlatitude, strlongitude):
+    output = []
+
     # remove spaces from string and convert to lowercase
     text = text.lower()
     text = text.rstrip()
@@ -45,8 +47,52 @@ def evalFood(text):
     # get alt options 
     alts = findAlts(text)
 
+    textFormatted = text[0].upper() + text[1:].lower()
 
-    print('hi')
+    curFoot = hash.get(textFormatted)
+
+    lowFoot = curFoot
+
+    food = ""
+
+    for i in alts:
+        if hash.get(i) < lowFoot:
+            food = i
+            lowFoot = hash.get(i)
+    
+    if lowFoot == curFoot:
+        return output
+    
+    output.append(food) 
+    output.append(curFoot - lowFoot)
+
+    # latitude = int(strlatitude)
+    # longitude = int(strlongitude)
+
+    zip = getZIP(strlatitude, strlongitude)
+    # query = "buy " + food + " near " + zip
+    
+
+    
+
+def getZIP(latitude, longitude):
+    # ASSUMES PERSON IS IN NORTH AMERICA
+    latitude = str(latitude)
+    longitude = str(0 - float(longitude))
+    # query = "" + latitude + " N, " + longitude + " E"
+
+    api = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}"
+    
+    data = requests.get(api)
+    data = data.json()
+    zip = data["address"].get("postcode", "")
+    return zip
+
+
+
+getZIP(str(30.2849), str(97.7341))
+    
+
 
 def findAlts(text):
     output = []
@@ -56,6 +102,8 @@ def findAlts(text):
     else:
         output = multiWordFood(text)
         return output
+
+
 
 def multiWordFood(text):
     # subdivide by spacing
@@ -79,7 +127,7 @@ def multiWordFood(text):
         return (postResults + preResults)
     else:
         #TODO IMPLEMENT WEBSCRAPING!
-        print('hi')
+        return output
 
 
 
@@ -94,7 +142,6 @@ def singleWordFood(text):
     # get all text from site
     soup = BeautifulSoup(results.content, "html.parser")
     allText = "".join([tag.text for tag in soup.find_all()])
-    # print(allText)
 
     links = soup.find_all('a')
 
@@ -105,8 +152,6 @@ def singleWordFood(text):
     linkText = ""
 
     for link in links:
-        # allTitles += link.get_text()
-        # allTitles += " "
         if startStore:
             if store:
                 if link.get_text().rstrip().lstrip().find(" ") != -1:
@@ -122,7 +167,6 @@ def singleWordFood(text):
                 startStore = True
                 store = True
 
-    # print(allText)
     allText += " " + linkText
 
     tokens = nltk.word_tokenize(allText)
@@ -145,15 +189,14 @@ def singleWordFood(text):
             posAlt = posAlt.rstrip()
             posAlt = posAlt.lstrip()
             
-
             if posAlt != formattedText and hash.get(posAlt) is not None:
                 if (posAlt not in output):
                     output.append(posAlt)
-                # print(posAlt)
+    
     if len(output) != 0:
         return output
     else:
-        # TODO: get wikipediaa scraping done
+        # TODO: get wikipedia scraping done
         return output
 
 
@@ -161,9 +204,9 @@ def singleWordFood(text):
 
 
 
-initializeHashMap()
-output = singleWordFood("beef")
-print(output)
+# initializeHashMap()
+# output = singleWordFood("beef")
+# print(output)
 # print(foods)
 # print(hash.get("Oat milk"))
 # findAlts("olive oil")
