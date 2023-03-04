@@ -55,7 +55,7 @@ function TextInput() {
         
         label ="Add an Item To Your Shopping List" 
         value = {inputValue}
-        variant="filled" 
+        variant="filled"
         onKeyDown = {(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
         onChange = {handleChange}
         
