@@ -95,7 +95,7 @@ def instacartData(zipCode, food):
     query = "buy " + food + " near " + zipCode + " instacart"
 
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
+    # options.add_argument('--headless')
     browser = webdriver.Chrome(options=options)
 
     browser.get('https://www.google.com/shopping')
@@ -103,15 +103,23 @@ def instacartData(zipCode, food):
     search_box.send_keys(query)
     search_box.submit()
 
-    opts = browser.find_elements(By.CLASS_NAME, 'pF6yef')
+    time.sleep(3)
+
+    opts = browser.find_elements(By.XPATH, "//div[@class='sFzvde gVNoLb']")
+    print(opts)
+    print(len(opts))
     # print(len(opts))
     for option in opts:
-        print(option)
-        title = option.find_element(By.CLASS_NAME, 'zZ1as').text
-        price = option.find_element(By.CLASS_NAME, 'bERqtb').text
-        print(title, price)
+        name = option.find_element(By.XPATH, ".//h3").text
+        price = option.find_element(By.XPATH, ".//div[@class='W9yFB']/g-price").text
+        link = option.find_element(By.XPATH, ".//a").get_attribute("href")
+        print(name)
+        print(price)
+        print(link)
+        print("\n")
 
-    time.sleep(10)
+
+    time.sleep(2)
 
 instacartData('75012', 'arugula')
 
