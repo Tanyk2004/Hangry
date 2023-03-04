@@ -1,4 +1,4 @@
-import * as React from 'react';
+//import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -10,19 +10,21 @@ import { COLORS } from '../values/colors';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
-
+import React, { useState } from "react";
 
 // defines a bunch of properties that we can customize for the card
 interface Props {
   title?: string;
   content?: string;
-  maxWidth?: number;
+  description?: string;
+  maxWidth: number;
   minWidth?: number;
   minHeight?: number;
   maxHeight?: number;
   contracted: boolean;
 
 }
+
 
 /**
  * This is a custom card component that we can use to display information
@@ -47,21 +49,39 @@ const customTheme = createTheme({
     }
   },
 });
-
+ 
 export default function BasicCard(props: Props) {
+
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    console.log(`Handling click: ${!isClicked}`)
+    setIsClicked(!isClicked);
+  };
 
   let foo = () => {
     return props.contracted;
   }
 
-  return (
+  const newWidth = isClicked ? props.maxWidth * 0.7 : props.maxWidth;
+  console.log(props.content)
 
-    <Card sx={{
-      maxWidth: foo() ? 300 : 100,
-      minWidth: props.minWidth,
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      alignContent: 'center',
+    }}>
+    <Card 
+    sx={{
+      maxWidth: newWidth,
+      minWidth: newWidth,
       minHeight: props.minHeight,
       maxHeight: props.maxHeight,
-      marginTop: 3,
+      marginTop: 1,
       width: {
         xs: 100, // theme.breakpoints.up('xs')
         sm: 200, // theme.breakpoints.up('sm')
@@ -71,25 +91,37 @@ export default function BasicCard(props: Props) {
       }, // This makes the card responsive by setting responsive widths
       background: foo() ? COLORS.card_background : COLORS.item_sustainable,
       borderRadius: 3,
-      transition: 'background transform 0.5s ease-in-out',
-      transitionDuration: '0.3s',
-      '&:hover': {
-        background: COLORS.item_sustainable,
-        transition: 'background 0.5s ease-in-out',
-      }
-    }} raised={true} >
+      transition: 'background transform 0.1s ease-in-out',
+      transitionDuration: '0.1s',
+       '&:hover': {
+         background: COLORS.gray,
+         transition: 'background 0.1s ease-in-out',
+       }
+    }} raised={true}
+      style={{flexGrow: 1, flexShrink: 1, flexBasis: 2}}
+      onClick={handleClick}
+    >
       <CardContent>
         <Typography sx={{ fontSize: 25, fontWeight: 'medium' }} variant='h1' color="text.primary" gutterBottom>
           {props.title}
         </Typography>
-        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-          {props.content}
-        </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {props.content}
+          {props.description}
         </Typography>
       </CardContent>
+      {isClicked && (
+        <CardActions>
+          <Button onClick={handleClick}>Reset</Button>
+        </CardActions>
+      )}
     </Card>
+    {isClicked &&
+      <Button style={{flexGrow: 0, flexShrink: 1, flexBasis: 0}}>Hello</Button>
+    }
+    {isClicked &&
+      <Button style={{flexGrow: 0, flexShrink: 1, flexBasis: 0}}>Delete</Button>
+    }
+    </div>
 
   );
 }
