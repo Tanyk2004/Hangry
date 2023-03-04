@@ -8,7 +8,7 @@ function TextInput() {
   return (
     <div>
       <TextField id="standard-basic" 
-      label="Standard" 
+      label="Input Your Shopping List" 
       variant="standard" />
     </div>
   );
