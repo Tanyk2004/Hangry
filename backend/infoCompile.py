@@ -12,7 +12,136 @@ from selenium.webdriver.common.by import By
 hash = {}
 foods = set()
 isInit = False
-loc = ""
+latlat = " "
+longlong = " "
+
+def initializeHashMap():
+    
+    # reading database + converting to hashmap
+    df = pd.read_excel('~/Documents/GitHub/Hangry/backend/food_option_names.xlsx')
+    global hash
+    for index, row in df.iterrows():
+        # print(row['Food'])
+        hash[(row['Food'].rstrip())] = row['gCO2e']
+    
+    # setting initialized variable to true for isHashInit()
+    global isInit 
+    isInit = True
+
+    # creating set of foods for easier scraping later
+    global foods
+    foods = set(hash.keys())
+    
+    # TODO: implement wikipedia webscraping for future webscraping use
+
+# done
+def isHashInit():
+    return isInit
+
+def getOptions():
+    print('hi')
+
+def evalFood(text, strlatitude, strlongitude):
+    return ["Arugula", "14", "$10", "google.com"]
+    global latlat
+    global longlong
+    if latlat == " ":
+        latlat = strlatitude
+        longlong = strlongitude
+    else:
+        strlatitude = latlat
+        strlongitude = longlong
+    output = []
+
+    # remove spaces from string and convert to lowercase
+    text = text.lower()
+    text = text.rstrip()
+    text = text.lstrip()
+
+    # get alt options 
+    alts = findAlts(text)
+
+    textFormatted = text[0].upper() + text[1:].lower()
+
+    curFoot = hash.get(textFormatted)
+
+    lowFoot = curFoot
+
+    food = ""
+
+    for i in alts:
+        if hash.get(i) < lowFoot:
+            food = i
+            lowFoot = hash.get(i)
+    
+    if lowFoot == curFoot:
+        return output
+    
+    output.append(food) 
+    output.append(curFoot - lowFoot)
+
+    # latitude = int(strlatitude)
+    # longitude = int(strlongitude)
+
+    zip = getZIP(strlatitude, strlongitude)
+    # query = "buy " + food + " near " + zip
+
+    instaData = instacartData(zip, food)
+
+    # return output
+    return ["Arugula", "14", "$10", "google.com"]
+
+def instacartData(zipCode, food):
+    query = "buy " + food + " near " + zipCode + " instacart"
+
+    options = webdriver.ChromeOptions()
+    # options.add_argument('--headless')
+    browser = webdriver.Chrome(options=options)
+
+    browser.get('https://www.google.com/shopping')
+    search_box = browser.find_element(By.NAME, 'q')
+    search_box.send_keys(query)
+    search_box.submit()
+
+    time.sleep(3)
+
+    opts = browser.find_elements(By.XPATH, "//div[@class='sFzvde gVNoLb']")
+    print(opts)
+    print(len(opts))
+    # print(len(opts))
+    for option in opts:
+        name = option.find_element(By.XPATH, ".//h3").text
+        price = option.find_element(By.XPATH, ".//div[@class='W9yFB']/g-price").text
+        link = option.find_element(By.XPATH, ".//a").get_attribute("href")
+        print(name)
+        print(price)
+        print(link)
+        print("\n")
+
+
+    time.sleep(2)
+
+instacartData('75012', 'arugula')
+
+
+
+def getZIP(latitude, longitude):
+    latitude = str(latitude)
+    longitude = str(longitude)
+    # query = "" + latitude + " N, " + longitude + " E"
+
+    api = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}"
+    
+    data = requests.get(api)
+    data = data.json()
+    zip = data["address"].get("postcode", "")
+    return zip
+
+
+
+# getZIP(str(30.2849), str(97.7341))
+    
+
 
 def findAlts(text):
     output = []

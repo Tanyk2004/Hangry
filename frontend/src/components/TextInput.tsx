@@ -18,6 +18,7 @@ import Container from "@mui/material/Container";
 
 interface Props {
   functionToCall: any;
+  setClicked?: any;
 }
 
 function TextInput(props:Props) {
@@ -84,6 +85,7 @@ function TextInput(props:Props) {
                   {inputValues.map((value, index) => (
                     <CSSTransition key={index} names ="list-item" timeout={300}>                       
                        <Card
+                        setClicked={props.setClicked}
                         title = {value}
                         minWidth = {800}
                         minHeight = {55}

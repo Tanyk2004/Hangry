@@ -8,27 +8,25 @@ import Slide from '@mui/material/Slide';
 import { useState, useEffect } from 'react'
 import '../styles/MainPage.css'
 import Card from '../components/SideCard'
+import cardClicked from '../components/CustomCard'
 
+interface Props {
+    isClicked : boolean;
+}
 
-
-
-function SideBar() {
+function SideBar(props:Props) {
     const containerRef = React.useRef(null);
     const [cardContracted, changeCardBool] = useState(false)
-    let changeClass = () => {
-        changeCardBool(!cardContracted)
-    }
+    
     return (
         <div>
 
-            <Box sx = {{width : 'fill'}}>
-                <Button onClick={changeClass}>Hello</Button>
+            <Box sx = {{width : 'fill' , marginLeft : 10}}>
                 <Box ref={containerRef} >
-                    <Slide direction="left" in={cardContracted} container={containerRef.current}>
+                    <Slide direction="left" in={props.isClicked} container={containerRef.current}>
                         {
                             <div >
-                                <Card title="Card left"
-                                    contracted={true}
+                                <Card title="Suggested Alternatives to the Product"
                                     minHeight={500}
                                     maxHeight={500}
                                 ></Card>

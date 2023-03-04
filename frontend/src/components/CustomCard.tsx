@@ -12,6 +12,7 @@ import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
 import React, { useState } from "react";
 
+
 // defines a bunch of properties that we can customize for the card
 interface Props {
   title?: string;
@@ -24,6 +25,7 @@ interface Props {
   contracted: boolean;
   sustainable?: boolean;
   alternative?: string;
+  setClicked : any;
 }
 
 
@@ -64,10 +66,12 @@ export default function BasicCard(props: Props) {
   const handleButtonClick = () => {
     setShowButton(!showButton);
     setIsClicked(!isClicked);
+    props.setClicked(!isClicked);
   }
   const handleButtonClickAccept = () => {
     setShowButton(!showButton);
     setIsClicked(!isClicked);
+    props.setClicked(!isClicked);
     setTitle(props.alternative) //input new title from backend
     setColor(COLORS.item_sustainable);
   }
@@ -76,6 +80,8 @@ export default function BasicCard(props: Props) {
     if(!sustainable) {
       console.log(`Handling click: ${!isClicked}`)
       setIsClicked(!isClicked);
+      console.log(isClicked);
+      props.setClicked(!isClicked);
       setShowButton(!showButton);
     }
   };

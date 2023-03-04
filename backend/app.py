@@ -5,6 +5,9 @@ import infoCompile
 app = Flask(__name__)
 CORS(app)
 
+lat = ""
+longitude = ""
+
 
 @app.route('/test-post', methods = ['POST'])
 def test_post():
@@ -16,11 +19,17 @@ def test_post():
         print("dictionary error")
     return 'hello world i hate programming', 200
 
+@app.post('/post-suggestions-with-loc')
+def makeBackendRequestwithLoc():
+    todo_data = request.get_json()
+    infoCompile.evalFood(todo_data['name'], todo_data["longitude"], todo_data["latitude"])
+    return {'soimetih' : "something else"},200
+
 @app.post('/post-suggestions')
 def makeBackendRequest():
     todo_data = request.get_json()
-    print(infoCompile.evalFood(todo_data['name'], todo_data['longitude'], todo_data['latitude']))
-    return {'msg': 'hello world i hate programming'},200
+    infoCompile.evalFood(todo_data['name'], " ", " ")
+    return {'soimetih' : "something else"},200
     
 
 if __name__ == '__main__':
