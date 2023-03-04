@@ -79,7 +79,7 @@ def evalFood(text, strlatitude, strlongitude):
     instaData = instacartData(zip, food)
 
     # return output
-    return []
+    return ["Arugula", "14", "$10", "google.com"]
 
 def instacartData(zipCode, food):
     query = "buy " + food + " near " + zipCode + " instacart"
