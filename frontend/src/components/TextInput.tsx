@@ -43,8 +43,6 @@ function TextInput() {
         onChange = {handleChange}
         
         />
-
-        <TextField value={inputValues}></TextField>
         {/* <ul>
           {inputValues.map((value, index) => (
               <li key={index}>{value}</li>

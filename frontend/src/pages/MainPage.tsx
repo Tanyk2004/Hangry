@@ -14,7 +14,7 @@ import { useState, useEffect } from 'react'
 
 function MainPage() {
     const [cardWidth, setCardWidth] = useState(100)
-    const [cardContracted, changeCardBool] = useState(true)
+    const [cardContracted, changeCardBool] = useState(false)
     const containerRef = React.useRef(null);
 
     let changeCardWidth = () => {
@@ -55,38 +55,33 @@ function MainPage() {
                         maxWidth={cardWidth}
                         maxHeight={100}
                         minHeight={100}
-                        contracted={cardContracted}
+                        contracted={true}
                     ></Card>
                 </Box>
                 <Box sx={{ width: 10 }} />
                 <Box sx={{ flexGrow: 0.5 }} >
-                    <Card title="Card right"
-                        content="Something random"
-                        maxWidth={cardWidth}
-                        maxHeight={100}
-                        minHeight={100}
-                        contracted={cardContracted}
-                    ></Card>
+                    <Box sx={{ width: 200 }} ref={containerRef} >
+                        <FormControlLabel
+                            control={<Switch checked={cardContracted} onChange={changeCardWidth} />}
+                            label="Show from target"
+                        />
+                        <Slide direction="left" in={cardContracted} container={containerRef.current}>
+                            {
+                                <div>
+                                    <Card title="Card left" contracted={true}
+                                        minHeight={100}
+                                        maxHeight={100}
+                                        maxWidth={100}
+                                        minWidth={100}
+                                    ></Card>
+                                </div>
+
+                            }
+                        </Slide>
+                    </Box>
                 </Box>
             </Box>
-            <Box sx={{ width: 200 }} ref={containerRef} >
-                <FormControlLabel
-                    control={<Switch checked={cardContracted} onChange={changeCardWidth} />}
-                    label="Show from target"
-                />
-                <Slide direction="up" in={cardContracted} container={containerRef.current}>
-                    {
-                        <Card contracted={false}
-                            minWidth={100}
-                            maxWidth={100}
-                            minHeight={100}
-                            maxHeight={200}
-                            title="Mid like your mom"
-                            content="Fly in my eagle"></Card>
 
-                    }
-                </Slide>
-            </Box>
             <Button onClick={changeCardWidth}>Click me</Button>
         </Box>
     )

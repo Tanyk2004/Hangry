@@ -24,6 +24,15 @@ interface Props {
 
 }
 
+/**
+ * This is a custom card component that we can use to display information
+ * @param props
+ * title, content, description are all optional and are just text with varying sizes
+ * contracted is a boolean that determines whether the card is contracted or not
+ * it is the only one that is not optional to help us decide its orientation
+ */
+
+
 // creates a theme for the card which helps us create transitions and animations
 const customTheme = createTheme({
   palette: {
