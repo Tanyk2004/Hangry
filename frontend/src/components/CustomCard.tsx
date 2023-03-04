@@ -66,6 +66,7 @@ export default function BasicCard(props: Props) {
   const handleButtonClick = () => {
     setShowButton(!showButton);
     setIsClicked(!isClicked);
+    props.setClicked(!isClicked);
   }
   const handleButtonClickAccept = () => {
     setShowButton(!showButton);
