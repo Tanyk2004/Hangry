@@ -13,16 +13,77 @@ import Grid from '@mui/material/Grid';
 import SideBar from '../components/SideBar';
 
 
+function DoGeolocation({setBackEndData} : any) {
+    var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+    };
+    
+    function success(pos : any) {
+        var crd = pos.coords;
+      
+        console.log("Your current position is:");
+        console.log(`Latitude : ${crd.latitude}`);
+        console.log(`Longitude: ${crd.longitude}`);
+        console.log(`More or less ${crd.accuracy} meters.`);
+        //axios call here
+        
+        const axiosResp:any[] = [];
+
+        setBackEndData(axiosResp);
+      }
+      
+    function errors(err: any) {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }
+    
+    function componentDidMount() {
+            if (navigator.geolocation) {
+              navigator.permissions
+                .query({ name: "geolocation" })
+                .then(function (result) {
+                  if (result.state === "granted") {
+                    console.log(result.state);
+                    //If granted then you can directly call your function here
+                    navigator.geolocation.getCurrentPosition(success);
+                    
+                  } else if (result.state === "prompt") {
+                    console.log(result.state);
+                    navigator.geolocation.getCurrentPosition(success, errors, options);
+    
+                  } else if (result.state === "denied") {
+                    //If denied then you have to show instructions to enable location
+                  }
+                  result.onchange = function () {
+                    console.log(result.state);
+                  };
+                });
+            } else {
+              alert("Sorry Not available!");
+            }
+    }
+    componentDidMount()
+}
 
 function MainPage() {
     const [cardWidth, setCardWidth] = useState(100)
     const [cardContracted, changeCardBool] = useState(false)
+
+
     const bgColor = "#B1E3E6";
     const styles = {
         backgroundColor: bgColor,
         height: "100vh",
     };
+
     const [classCard, setClassCard] = useState("btn-true")
+    const [backEndData, setBackEndData] = useState([]);
+
+    useEffect(() => {
+        DoGeolocation(setBackEndData)
+    }, [setBackEndData])
+
     let changeCardWidth = () => {
         if (!cardContracted) {
             setCardWidth(100)
@@ -47,6 +108,11 @@ function MainPage() {
             changeCardBool(false)
         }
     }
+
+    if (backEndData.length > 0 ) {
+        return <p>wowww got data from backend</p>
+    }
+
     return (
         <div style={styles}>
             <Box sx={{

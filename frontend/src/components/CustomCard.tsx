@@ -22,6 +22,8 @@ interface Props {
   minHeight?: number;
   maxHeight?: number;
   contracted: boolean;
+  sustainable: boolean;
+  alternative: string;
 }
 
 
@@ -55,7 +57,7 @@ export default function BasicCard(props: Props) {
   const [showButton, setShowButton] = useState(true);
   const [title, setTitle] = useState(props.title);
 
-  const sustainable = false; //get this boolean from backend
+  const sustainable = props.sustainable; //get this boolean from backend
   const color = sustainable ? COLORS.item_sustainable:COLORS.item_unsustainable;
   const [thisColor, setColor] = useState(color)
 
@@ -66,14 +68,16 @@ export default function BasicCard(props: Props) {
   const handleButtonClickAccept = () => {
     setShowButton(!showButton);
     setIsClicked(!isClicked);
-    setTitle('reset') //input new title from backend
+    setTitle(props.alternative) //input new title from backend
     setColor(COLORS.item_sustainable);
   }
 
   const handleClick = () => {
-    console.log(`Handling click: ${!isClicked}`)
-    setIsClicked(!isClicked);
-    setShowButton(!showButton);
+    if(!sustainable) {
+      console.log(`Handling click: ${!isClicked}`)
+      setIsClicked(!isClicked);
+      setShowButton(!showButton);
+    }
   };
 
   let foo = () => {
@@ -82,6 +86,12 @@ export default function BasicCard(props: Props) {
 
   const newWidth = isClicked ? props.maxWidth * 0.7 : props.maxWidth;
   console.log(props.content)
+
+  const hoverStyle = sustainable ? {} : {
+    background: COLORS.gray,
+    transition: 'background 0.1s ease-in-out',
+  }
+  const styleType = sustainable ? {} : {flexGrow: 1, flexShrink: 1, flexBasis: 2}
 
   return (
     <div style={{
@@ -110,14 +120,15 @@ export default function BasicCard(props: Props) {
       borderRadius: 3,
       transition: 'background transform 0.1s ease-in-out',
       transitionDuration: '0.1s',
-       '&:hover': {
-         background: COLORS.gray,
-         transition: 'background 0.1s ease-in-out',
-       }
-    }} raised={true}
-      style={{flexGrow: 1, flexShrink: 1, flexBasis: 2}}
+
+
+       '&:hover': hoverStyle
+    }} raised={sustainable}
+      style={styleType}
       onClick={handleClick}
     >
+
+
       <CardContent>
         <Typography sx={{ fontSize: 25, fontWeight: 'medium' }} variant='h1' color="text.primary" gutterBottom>
           {title}
@@ -126,14 +137,14 @@ export default function BasicCard(props: Props) {
           {props.description}
         </Typography>
       </CardContent>
-      {isClicked && (
+      {isClicked && !sustainable && (
         <CardActions>
           <Button onClick={handleClick}>Reset</Button>
         </CardActions>
       )}
     </Card>
     <>
-    {isClicked &&
+    {isClicked && !sustainable &&
       <Button 
       style={{flexGrow: 0, flexShrink: 1, flexBasis: 0, maxHeight: 55, minHeight: 55}}
       variant = "contained"
@@ -145,7 +156,7 @@ export default function BasicCard(props: Props) {
       
     }
     </>
-    {isClicked &&
+    {isClicked && !sustainable &&
       <Button style={{flexGrow: 0, flexShrink: 1, flexBasis: 0, maxHeight: 55, minHeight: 55}}
       variant = "contained"
       sx={{ bgcolor: COLORS.item_unsustainable }}
