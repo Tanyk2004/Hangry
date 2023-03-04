@@ -17,6 +17,10 @@ function MainPage() {
     const [cardWidth, setCardWidth] = useState(100)
     const [cardContracted, changeCardBool] = useState(false)
     const containerRef = React.useRef(null);
+    const bgColor = "#B1E3E6";
+    const styles = {
+        backgroundColor: bgColor
+    };
     const [classCard, setClassCard] = useState("btn-true")
     let changeCardWidth = () => {
         if (!cardContracted) {
@@ -43,12 +47,18 @@ let changeClass = () => {
         }
 }
     return (
+        <div style = {styles}>
         <Box>
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'center',
             }}>
-                <Typography variant="h1">SHOPGRADE</Typography>
+                <Typography 
+                variant="h1" 
+                style={{ fontFamily: 'sans-serif', 
+                fontSize: '64px', 
+                fontWeight: 520, 
+                fontStyle: 'italic'}} >SHOPGRADE</Typography>
             </Box>
             <Box sx={{ display: 'flex' }}>
 
@@ -110,6 +120,7 @@ let changeClass = () => {
                 </Box>
             </Box>
         </Box>
+    </div>
     )
 }
 
