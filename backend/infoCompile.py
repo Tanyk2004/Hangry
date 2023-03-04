@@ -36,6 +36,10 @@ def isHashInit():
 def getOptions():
     print('hi')
 
+"""
+    @param: name of the food
+
+"""
 def evalFood(text):
     # remove spaces from string and convert to lowercase
     text = text.lower()
@@ -44,8 +48,7 @@ def evalFood(text):
 
     # get alt options 
     alts = findAlts(text)
-
-
+    
     print('hi')
 
 def findAlts(text):
@@ -205,7 +208,7 @@ def singleWordFood(text):
             posAlt = posAlt.rstrip()
             posAlt = posAlt.lstrip()
             print(posAlt)
-            time.
+        
 
             # if posAlt != formattedText and hash.get(posAlt) is not None:
             #     output.append(posAlt)
