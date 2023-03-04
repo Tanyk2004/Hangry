@@ -1,15 +1,42 @@
 import React from 'react'
 import TextField from '@mui/material/TextField';
-import { shadows } from '@mui/system';
-import { spacing } from '@mui/system';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import List from '@mui/material/Box';
+import Collapse from '@mui/material/Box';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import Card from './CustomCard';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Box';
+
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Container from "@mui/material/Container";
+
 
 function TextInput() {
-  const [value, setValue] = React.useState('');
-  const inputLabelProps = {
-    style: {
-      textAlign: 'left',
-    },
+
+  const [inputValue, setInputValue] = useState('');
+  const [inputValues, setInputValues] = useState<string[]>([]);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === 'Enter' && (e.target as HTMLInputElement).value !== '') {
+      console.log('old: ', inputValues);
+      console.log(inputValue);
+      e.preventDefault();
+      setInputValues(inputValues.concat(inputValue.trim()));
+      setInputValue('');
+      console.log(inputValues);
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue((e.target as HTMLInputElement).value);
   };
+
 
   return (
     <div>
@@ -18,20 +45,56 @@ function TextInput() {
         sx={{
           width: { md: 800 },
           "& .MuiInputBase-root": {
-            height: 55
+            height: 55,
+            background: 'white'
           },
         
         boxShadow: 10,
-        //borderRadius:4,
-        pl: '10',
         textAlign: 'center'
         }}
-        //InputProps={{
-         // disableUnderline: true,
-        //}}
         
-        label ="Input Your Shopping List" 
-        variant="outlined" />
+        label ="Add an Item To Your Shopping List" 
+        value = {inputValue}
+        variant="filled"
+        onKeyDown = {(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
+        onChange = {handleChange}
+        
+        />
+        
+          { <List>
+            <Box
+              sx={{
+                mt : 1,
+                width: 300,
+                height: 300,
+              }}>
+                <div>
+                <TransitionGroup 
+                  component="div" 
+                  style={{ listStyle: 'none', margin: 0, padding: 0 }}
+                  maxWidth = {800}
+                  maxHeight = {60}
+                >
+                  {inputValues.map((value, index) => (
+                    <CSSTransition key={index} names ="list-item" timeout={300}>                       
+                       <Card
+                        title = {value}
+                        minWidth = {800}
+                        minHeight = {55}
+                        maxWidth = {800} 
+                        maxHeight = {55}
+                        contracted = {true}
+                        description = {'oh boy do i love coding'}
+                      ></Card>
+                    </CSSTransition>
+                  ))}
+                </TransitionGroup>
+                </div>
+              </Box>
+          </List> }
+        
+        
+
     </div>
   );
 }
