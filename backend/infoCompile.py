@@ -21,7 +21,7 @@ def initializeHashMap():
     df = pd.read_excel('~/Documents/GitHub/Hangry/backend/food_option_names.xlsx')
     global hash
     for index, row in df.iterrows():
-        # print(row['Food'])
+        # # print(row['Food'])
         hash[(row['Food'].rstrip())] = row['gCO2e']
     
     # setting initialized variable to true for isHashInit()
@@ -94,7 +94,7 @@ def instacartData(zipCode, food):
     query = "buy " + food + " near " + zipCode + " instacart"
 
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')
+    options.add_argument('--headless')
     browser = webdriver.Chrome(options=options)
 
     browser.get('https://www.google.com/shopping')
@@ -105,17 +105,17 @@ def instacartData(zipCode, food):
     time.sleep(3)
 
     opts = browser.find_elements(By.XPATH, "//div[@class='sFzvde gVNoLb']")
-    print(opts)
-    print(len(opts))
+    # print(opts)
     # print(len(opts))
+    # # print(len(opts))
     for option in opts:
         name = option.find_element(By.XPATH, ".//h3").text
         price = option.find_element(By.XPATH, ".//div[@class='W9yFB']/g-price").text
         link = option.find_element(By.XPATH, ".//a").get_attribute("href")
-        print(name)
-        print(price)
-        print(link)
-        print("\n")
+        # print(name)
+        # print(price)
+        # print(link)
+        # print("\n")
 
 
     time.sleep(2)
@@ -146,11 +146,11 @@ def findAlts(text):
     output = []
     if text.find(" ") == -1:
         output = singleWordFood(text)
-        print(output)
+        # print(output)
         return output
     else:
         output = multiWordFood(text)
-        print(output)
+        # print(output)
         return output
 
 
@@ -240,7 +240,7 @@ def singleWordFood(text):
             # posAlt = posAlt.lstrip()
             # if "Tofu" in posAlt:
             #     break
-            # print(posAlt)
+            # # print(posAlt)
             if posAlt != formattedText and hash.get(posAlt) is not None:
                 
                 if (posAlt not in output):
@@ -259,9 +259,9 @@ def singleWordFood(text):
 
 # initializeHashMap()
 # output = singleWordFood("beef")
-# print(output)
-# print(foods)
-# print(hash.get("Oat milk"))
+# # print(output)
+# # print(foods)
+# # print(hash.get("Oat milk"))
 # findAlts("olive oil")
 
 def initializeHashMap():
@@ -270,7 +270,7 @@ def initializeHashMap():
     df = pd.read_excel('~/Documents/GitHub/Hangry/backend/food_option_names.xlsx')
     global hash
     for index, row in df.iterrows():
-        # print(row['Food'])
+        # # print(row['Food'])
         hash[(row['Food'].rstrip())] = row['gCO2e']
     
     # setting initialized variable to true for isHashInit()
@@ -290,56 +290,10 @@ def isHashInit():
 def getOptions():
     print('hi')
 
-def evalFood(text, strlatitude, strlongitude):
-    output = []
-
-    # remove spaces from string and convert to lowercase
-    text = text.lower()
-    text = text.rstrip()
-    text = text.lstrip()
-
-    # get alt options 
-    alts = findAlts(text)
-    print(alts)
-    textFormatted = text[0].upper() + text[1:].lower()
-    zip = getZIP(strlatitude, strlongitude)
-    curFoot = hash.get(textFormatted)
-
-    lowFoot = curFoot
-
-    food = ""
-
-    for i in alts:
-        if hash.get(i) < lowFoot:
-            food = i
-            lowFoot = hash.get(i)
-        
-    
-    if lowFoot == curFoot:
-        return output
-    
-    output.append(food) 
-    output.append(curFoot - lowFoot)
-
-    # latitude = int(strlatitude)
-    # longitude = int(strlongitude)
-
-    
-    # query = "buy " + food + " near " + zip
-
-    print(zip)
-    print(food)
-    # instaData = instacartData(zip, food)
-    instaData = ["instacart.com", "$3.00"]
-
-    output = output + instaData
-
-    return output
-    # return ["Arugula", "14", "$10", "google.com"]
 
 def instacartData(zipCode, food):
     query = "buy " + food + " near " + zipCode + " instacart"
-    print(query)
+    # print(query)
     # browser.quit()
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
@@ -351,21 +305,21 @@ def instacartData(zipCode, food):
     search_box.submit()
 
     opts = browser.find_elements(By.XPATH, "//a[@href]")
-    # print(opts)
-    # print(len(opts))
-    # print(len(opts))
+    # # print(opts)
+    # # print(len(opts))
+    # # print(len(opts))
     ourLink = ""
     for option in opts:
         #name = option.find_element(By.XPATH, "").text
         #price = option.find_element(By.XPATH, "").text
         link = option.get_attribute("href")
         if "instacart" in link and "url?url" in link:
-            print(link)
+            # print(link)
             ourLink = link
             break 
-        #print(name)
-        #print(price)
-    print(ourLink)
+        ## print(name)
+        ## print(price)
+    # print(ourLink)
     options1 = webdriver.ChromeOptions()
     options1.add_argument('--headless')
     browser1 = webdriver.Chrome(options=options)
@@ -396,12 +350,12 @@ def getZIP(latitude, longitude):
 
 initializeHashMap()
 print(evalFood("beef", str(30.2849), str(-97.7341)))
-# print(instacartData("78712", "Lentils"))
-# print(getZIP(str(30.2849), str(-97.7341)))
-# print(findAlts("beef"))
-# print(findAlts("olive oil"))
-# print(singleWordFood("beef"))
-# print(hash.get('Tempah'))
+# # print(instacartData("78712", "Lentils"))
+# # print(getZIP(str(30.2849), str(-97.7341)))
+# # print(findAlts("beef"))
+# # print(findAlts("olive oil"))
+# # print(singleWordFood("beef"))
+# # print(hash.get('Tempah'))
     
 
 
