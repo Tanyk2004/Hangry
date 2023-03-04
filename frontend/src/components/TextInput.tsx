@@ -7,9 +7,10 @@ function TextInput() {
 
   return (
     <div>
-      <TextField id="standard-basic" 
+      <TextField id="outlined-basic" 
       label="Input Your Shopping List" 
-      variant="standard" />
+      maxLength={50}
+      variant="outlined" />
     </div>
   );
 }
