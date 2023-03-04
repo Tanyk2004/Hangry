@@ -38,7 +38,12 @@ function MainPage() {
                 display: 'flex',
                 justifyContent: 'center',
             }}>
-                <Typography variant="h1">SHOPGRADE</Typography>
+                <Typography 
+                variant="h1" 
+                style={{ fontFamily: 'sans-serif', 
+                fontSize: '64px', 
+                fontWeight: 520, 
+                fontStyle: 'italic'}} >SHOPGRADE</Typography>
             </Box>
             <Box sx={{
                 display: 'flex',
