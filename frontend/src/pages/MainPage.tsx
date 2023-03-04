@@ -9,33 +9,34 @@ import Switch from '@mui/material/Switch';
 import Slide from '@mui/material/Slide';
 import { useState, useEffect } from 'react'
 import '../styles/MainPage.css'
-
+import Grid from '@mui/material/Grid';
+import SideBar from '../components/SideBar';
 
 
 
 function MainPage() {
     const [cardWidth, setCardWidth] = useState(100)
     const [cardContracted, changeCardBool] = useState(false)
-    const containerRef = React.useRef(null);
     const bgColor = "#B1E3E6";
     const styles = {
-        backgroundColor: bgColor
+        backgroundColor: bgColor,
+        height: "100vh",
     };
     const [classCard, setClassCard] = useState("btn-true")
     let changeCardWidth = () => {
         if (!cardContracted) {
             setCardWidth(100)
-            
+
             changeCardBool(true)
-            
+
         } else {
             setCardWidth(300)
-            
+
             changeCardBool(false)
-            
+
         }
     }
-let changeClass = () => {
+    let changeClass = () => {
         if (cardContracted) {
             setClassCard("btn-true")
             console.log(classCard)
@@ -45,82 +46,29 @@ let changeClass = () => {
             console.log(classCard)
             changeCardBool(false)
         }
-}
+    }
     return (
-        <div style = {styles}>
-        <Box>
+        <div style={styles}>
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'center',
             }}>
-                <Typography 
-                variant="h1" 
-                style={{ 
-                fontSize: '64px', 
-                fontWeight: 520, }} 
-                >SHOPGRADE</Typography>
+                <Typography
+                    variant="h1"
+                    style={{
+                        fontSize: '64px',
+                        fontWeight: 520,
+                    }}>SHOPGRADE</Typography>
             </Box>
-            <Box sx={{ display: 'flex' }}>
-
-                <Box sx={{
-                    display: 'flex',
-                    paddingTop: 2,
-                    flexGrow: 1,
-                    transform: 'translateX(50%)',
-                }}>
-                    <TextInput></TextInput>
-                </Box>
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flexGrow: 0.1,
-                }} >
-                    <Button variant="contained"
-                        className='btn-true'
-                        color="primary"
-                        size="large"
-                        onClick={changeClass}
-                        sx={{ marginTop: 2, marginBottom: 2, flexGrow: 0.2, maxHeight: 50 }}>DONE</Button>
+            <Box >
+                <Box sx={{ display: 'flex', justifyContent: 'center', padding: '15', marginRight: '20' }}>
+                    <div>
+                        <TextInput></TextInput>
+                    </div>
+                    <SideBar></SideBar>
                 </Box>
             </Box>
-            <Box sx={{ display: "flex" }} paddingTop={5} paddingBottom={5}>
-                <Box sx={{ width: 30 }}>
-                </Box>
-                <Box sx={{ flexGrow: 1.5, alignItems: 'center' }} className = {classCard}>
-                    <Card title="Card left"
-                        content="Something random"
-                        maxWidth={cardWidth}
-                        maxHeight={100}
-                        minHeight={100}
-                        contracted={true}
-                    ></Card>
-                </Box>
-                <Box sx={{ width: 10 }} />
-                <Box sx={{ flexGrow: 0.5 }} >
-                    <Box sx={{ width: 200 }} ref={containerRef} >
-                        <FormControlLabel
-                            control={<Switch checked={cardContracted} onChange={changeCardWidth} />}
-                            label="Show from target"
-                        />
-                        <Slide direction="left" in={cardContracted} container={containerRef.current}>
-                            {
-                                <div >
-                                    <Card title="Card left" 
-                                        contracted={true}
-                                        minHeight={100}
-                                        maxHeight={100}
-                                        maxWidth={100}
-                                        minWidth={100}
-                                    ></Card>
-                                </div>
-
-                            }
-                        </Slide>
-                    </Box>
-                </Box>
-            </Box>
-        </Box>
-    </div>
+        </div>
     )
 }
 
