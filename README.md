@@ -1,5 +1,5 @@
 # Hangry
-## A shopping list app that labels products based on sustainability and then suggests alternatives.
+<h2>A shopping list app that labels products based on sustainability and then suggests alternatives.</h2>
 
 ## Idea: 
 
@@ -31,3 +31,8 @@
     - cd into "venv/Scripts"
     - type `activate`
   * run "app.py" using `python app.py`
+
+
+## Upcoming changes
+  * A bigger and more refined database for more alternatives. 
+  * Major upgrades to the front-end with more functionality as a shopping list app. 
