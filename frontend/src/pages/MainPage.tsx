@@ -14,61 +14,61 @@ import axios from 'axios';
 import SideBar from '../components/SideBar';
 
 
-function DoGeolocation({setBackEndData, name} : any) {
+function DoGeolocation({ setBackEndData, name }: any) {
     var options = {
         enableHighAccuracy: true,
         timeout: 5000,
         maximumAge: 0,
     };
-    
-    function success(pos : any) {
+
+    function success(pos: any) {
         var crd = pos.coords;
-      
+
         console.log("Your current position is:");
         console.log(`Latitude : ${crd.latitude}`);
         console.log(`Longitude: ${crd.longitude}`);
         console.log(`More or less ${crd.accuracy} meters.`);
         //axios call here
-        axios.post('http://localhost:5000/post-suggestions-with-loc', 
-        {"name" : "name", "longitude" : crd.longitude, "latitude" : crd.latitude}).then((response) => {
-            if (response.status === 200) {
-                console.log(response.data)
-                setBackEndData(response.data)
-              }
+        axios.post('http://localhost:5000/post-suggestions-with-loc',
+            { "name": "name", "longitude": crd.longitude, "latitude": crd.latitude }).then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data)
+                    setBackEndData(response.data)
+                }
             }, (error) => {
-              console.log(error);
-        });
+                console.log(error);
+            });
     }
-    
-      
+
+
     function errors(err: any) {
         console.warn(`ERROR(${err.code}): ${err.message}`);
     }
-    
+
     function componentDidMount() {
-            if (navigator.geolocation) {
-              navigator.permissions
+        if (navigator.geolocation) {
+            navigator.permissions
                 .query({ name: "geolocation" })
                 .then(function (result) {
-                  if (result.state === "granted") {
-                    console.log(result.state);
-                    //If granted then you can directly call your function here
-                    navigator.geolocation.getCurrentPosition(success);
-                    
-                  } else if (result.state === "prompt") {
-                    console.log(result.state);
-                    navigator.geolocation.getCurrentPosition(success, errors, options);
-    
-                  } else if (result.state === "denied") {
-                    //If denied then you have to show instructions to enable location
-                  }
-                  result.onchange = function () {
-                    console.log(result.state);
-                  };
+                    if (result.state === "granted") {
+                        console.log(result.state);
+                        //If granted then you can directly call your function here
+                        navigator.geolocation.getCurrentPosition(success);
+
+                    } else if (result.state === "prompt") {
+                        console.log(result.state);
+                        navigator.geolocation.getCurrentPosition(success, errors, options);
+
+                    } else if (result.state === "denied") {
+                        //If denied then you have to show instructions to enable location
+                    }
+                    result.onchange = function () {
+                        console.log(result.state);
+                    };
                 });
-            } else {
-              alert("Sorry Not available!");
-            }
+        } else {
+            alert("Sorry Not available!");
+        }
     }
     componentDidMount()
 }
@@ -90,22 +90,22 @@ function MainPage() {
     const [name, setName] = useState("")
     const [inputValues, setInputValues] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState('');
-    function callBackend(textinput: string){
+    function callBackend(textinput: string) {
         axios.post('http://localhost:5000/post-suggestions',
-        {"name" : textinput}).then((response) => {
-            if (response.status === 200) {
-                console.log(response.data)
-                setBackEndData(response.data)
-                setInputValues(inputValues.concat(inputValue.trim()));
-              }
+            { "name": textinput }).then((response) => {
+                if (response.status === 200) {
+                    console.log(response.data)
+                    setBackEndData(response.data)
+                    setInputValues(inputValues.concat(inputValue.trim()));
+                }
             }, (error) => {
                 alert("Could not add item")
-              //console.log(error);
-        })
+                //console.log(error);
+            })
     }
 
     useEffect(() => {
-        DoGeolocation({setBackEndData, name})
+        DoGeolocation({ setBackEndData, name })
     }, [setBackEndData])
 
     let changeCardWidth = () => {
@@ -133,8 +133,8 @@ function MainPage() {
         }
     }
 
-    
-    function doSomething(arg1:any){
+
+    function doSomething(arg1: any) {
         console.log(arg1)
     }
 
@@ -154,21 +154,21 @@ function MainPage() {
             <Box >
                 <Box sx={{ display: 'flex', justifyContent: 'center', padding: '15', marginRight: '20' }}>
                     <div>
-                        <TextInput functionToCall={callBackend} setClicked = {changeCardBool}
-                        sustainable = {backEndData.length == 0}
-                        alternative = {backEndData[0]}
-                        inputValue = {inputValue}
-                        setInputValue = {setInputValue}
-                        inputValues = {inputValues}
-                        setInputValues = {setInputValues}
+                        <TextInput functionToCall={callBackend} setClicked={changeCardBool}
+                            sustainable={backEndData.length == 0}
+                            alternative={backEndData[0]}
+                            inputValue={inputValue}
+                            setInputValue={setInputValue}
+                            inputValues={inputValues}
+                            setInputValues={setInputValues}
                         ></TextInput>
-                        
+
                     </div>
-                    <SideBar isClicked = {cardContracted} 
-                    firstAlternative = {backEndData[0]}
-                    firstImpact = {backEndData[1]}
-                    firstPrice = {backEndData[2]}
-                    firstLink = {backEndData[3]}
+                    <SideBar isClicked={cardContracted}
+                        firstAlternative={backEndData[0]}
+                        firstImpact={backEndData[1]}
+                        firstPrice={backEndData[2]}
+                        firstLink={backEndData[3]}
                     ></SideBar>
                 </Box>
             </Box>

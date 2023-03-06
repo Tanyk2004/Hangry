@@ -27,23 +27,23 @@ interface Props {
   setInputValues: any;
 }
 
-function TextInput(props:Props) {
+function TextInput(props: Props) {
 
- 
-  
+
+
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === 'Enter' && (e.target as HTMLInputElement).value !== '') {
-      
-      
+    if (e.key === 'Enter' && (e.target as HTMLInputElement).value !== '') {
+
+
       props.functionToCall(props.inputValue);
 
       console.log(props.inputValue);
       e.preventDefault();
 
-      
+
       props.setInputValue('');
-      
+
     }
   }
 
@@ -54,7 +54,7 @@ function TextInput(props:Props) {
 
   return (
     <div>
-      <TextField 
+      <TextField
         id="outlined-basic"
         sx={{
           width: { md: 800 },
@@ -62,55 +62,55 @@ function TextInput(props:Props) {
             height: 55,
             background: 'white'
           },
-        
-        boxShadow: 10,
-        textAlign: 'center'
-        }}
-        
-        label ="Add an Item To Your Shopping List" 
-        value = {props.inputValue}
-        variant="filled"
-        onKeyDown = {(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
-        onChange = {handleChange}
-        
-        />
-        
-          { <List>
-            <Box
-              sx={{
-                mt : 1,
-                width: 300,
-                height: 300,
-              }}>
-                <div>
-                <TransitionGroup 
-                  component="div" 
-                  style={{ listStyle: 'none', margin: 0, padding: 0 }}
-                  maxWidth = {800}
-                  maxHeight = {60}
-                >
-                  {props.inputValues.map((value, index) => (
-                    <CSSTransition key={index} names ="list-item" timeout={300}>                       
-                       <Card
-                        setClicked={props.setClicked}
-                        title = {value}
-                        minWidth = {800}
-                        minHeight = {55}
-                        maxWidth = {800} 
-                        maxHeight = {55}
-                        contracted = {true}
-                        sustainable = {props.sustainable} //input this from backend
-                        alternative = {props.alternative} //input this from backend
 
-                      ></Card>
-                    </CSSTransition>
-                  ))}
-                </TransitionGroup>
-                </div>
-              </Box>
-          </List> }
-        
-        
+          boxShadow: 10,
+          textAlign: 'center'
+        }}
+
+        label="Add an Item To Your Shopping List"
+        value={props.inputValue}
+        variant="filled"
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => handleKeyDown(e)}
+        onChange={handleChange}
+
+      />
+
+      {<List>
+        <Box
+          sx={{
+            mt: 1,
+            width: 300,
+            height: 300,
+          }}>
+          <div>
+            <TransitionGroup
+              component="div"
+              style={{ listStyle: 'none', margin: 0, padding: 0 }}
+              maxWidth={800}
+              maxHeight={60}
+            >
+              {props.inputValues.map((value, index) => (
+                <CSSTransition key={index} names="list-item" timeout={300}>
+                  <Card
+                    setClicked={props.setClicked}
+                    title={value}
+                    minWidth={800}
+                    minHeight={55}
+                    maxWidth={800}
+                    maxHeight={55}
+                    contracted={true}
+                    sustainable={props.sustainable} //input this from backend
+                    alternative={props.alternative} //input this from backend
+
+                  ></Card>
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
+          </div>
+        </Box>
+      </List>}
+
+
 
     </div>
   );

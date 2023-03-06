@@ -77,17 +77,10 @@ def evalFood(text, strlatitude, strlongitude):
         return output
     
     output.append(food) 
-    output.append(curFoot - lowFoot)
-
-    # latitude = int(strlatitude)
-    # longitude = int(strlongitude)
+    output.append(str(curFoot - lowFoot) + "g CO2e reduction")
 
     zip = getZIP(strlatitude, strlongitude)
-    # query = "buy " + food + " near " + zip
 
-    # instaData = instacartData(zip, food)
-
-    # return output
     return output + ["instacart.com", "$3.00"]
 
 def instacartData(zipCode, food):
@@ -105,17 +98,11 @@ def instacartData(zipCode, food):
     time.sleep(3)
 
     opts = browser.find_elements(By.XPATH, "//div[@class='sFzvde gVNoLb']")
-    # print(opts)
-    # print(len(opts))
-    # # print(len(opts))
+
     for option in opts:
         name = option.find_element(By.XPATH, ".//h3").text
         price = option.find_element(By.XPATH, ".//div[@class='W9yFB']/g-price").text
         link = option.find_element(By.XPATH, ".//a").get_attribute("href")
-        # print(name)
-        # print(price)
-        # print(link)
-        # print("\n")
 
 
     time.sleep(2)
@@ -127,7 +114,6 @@ instacartData('75012', 'arugula')
 def getZIP(latitude, longitude):
     latitude = str(latitude)
     longitude = str(longitude)
-    # query = "" + latitude + " N, " + longitude + " E"
 
     api = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}"
     
@@ -136,10 +122,6 @@ def getZIP(latitude, longitude):
     zip = data["address"].get("postcode", "")
     return zip
 
-
-
-# getZIP(str(30.2849), str(97.7341))
-    
 
 
 def findAlts(text):
@@ -193,31 +175,7 @@ def singleWordFood(text):
     soup = BeautifulSoup(results.content, "html.parser")
     allText = "".join([tag.text for tag in soup.find_all()])
 
-    # links = soup.find_all('a')
-
-    # startStore = False
-    # store = False
-
-    # sortedLinks = []
-    # linkText = ""
-
-    # for link in links:
-    #     if startStore:
-    #         if store:
-    #             if link.get_text().rstrip().lstrip().find(" ") != -1:
-    #                 sortedLinks.append(link.get("href"))
-    #                 linkText += link.get_text() + " "
-    #             else:
-    #                 store = False
-    #                 linkText += link.get_text()
-    #         else:
-    #             linkText += link.get_text()
-    #     else:
-    #         if "Verbatim" in link.get_text():
-    #             startStore = True
-    #             store = True
-
-    # allText += " " + linkText
+  
 
     tokens = nltk.word_tokenize(allText)
     tagged = nltk.pos_tag(tokens)
@@ -252,17 +210,7 @@ def singleWordFood(text):
         # TODO: get wikipedia scraping done
         return output
 
-
-
-
-
-
-# initializeHashMap()
-# output = singleWordFood("beef")
-# # print(output)
-# # print(foods)
-# # print(hash.get("Oat milk"))
-# findAlts("olive oil")
+# done
 
 def initializeHashMap():
     
@@ -286,10 +234,6 @@ def initializeHashMap():
 # done
 def isHashInit():
     return isInit
-
-def getOptions():
-    print('hi')
-
 
 def instacartData(zipCode, food):
     query = "buy " + food + " near " + zipCode + " instacart"
@@ -350,12 +294,7 @@ def getZIP(latitude, longitude):
 
 initializeHashMap()
 print(evalFood("olive oil", str(30.2849), str(-97.7341)))
-# # print(instacartData("78712", "Lentils"))
-# # print(getZIP(str(30.2849), str(-97.7341)))
-# # print(findAlts("beef"))
-# # print(findAlts("olive oil"))
-# # print(singleWordFood("beef"))
-# # print(hash.get('Tempah'))
+
     
 
 
