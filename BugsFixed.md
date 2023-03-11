@@ -25,3 +25,5 @@
  * nltk (backend)
  * requests (backend)
  * certifi (backend)
+ * BeautifulSoup (backend)
+ * 
