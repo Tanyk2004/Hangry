@@ -120,7 +120,7 @@ def instacartData(zipCode, food):
 
     time.sleep(2)
 
-instacartData('75012', 'arugula')
+# instacartData('75012', 'arugula')
 
 
 
