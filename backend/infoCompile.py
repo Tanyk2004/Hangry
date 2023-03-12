@@ -8,6 +8,7 @@ import requests
 from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
+import os
 
 hash = {}
 foods = set()
@@ -16,12 +17,10 @@ latlat = " "
 longlong = " "
 
 def initializeHashMap():
-    
     # reading database + converting to hashmap
-    df = pd.read_excel('~/Documents/GitHub/Hangry/backend/food_option_names.xlsx')
+    df = pd.read_excel(str(os.path.dirname(__file__)) + '/food_option_names.xlsx')
     global hash
     for index, row in df.iterrows():
-        # # print(row['Food'])
         hash[(row['Food'].rstrip())] = row['gCO2e']
     
     # setting initialized variable to true for isHashInit()
@@ -34,16 +33,14 @@ def initializeHashMap():
     
     # TODO: implement wikipedia webscraping for future webscraping use
 
-# done
 def isHashInit():
     return isInit
-
-def getOptions():
-    print('hi')
 
 def evalFood(text, strlatitude, strlongitude):
     global latlat
     global longlong
+
+    # check if coordinates of user are already stored
     if latlat == " ":
         latlat = strlatitude
         longlong = strlongitude
@@ -81,47 +78,8 @@ def evalFood(text, strlatitude, strlongitude):
 
     zip = getZIP(strlatitude, strlongitude)
 
-    return output + ["instacart.com", "$3.00"]
-
-def instacartData(zipCode, food):
-    query = "buy " + food + " near " + zipCode + " instacart"
-
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    browser = webdriver.Chrome(options=options)
-
-    browser.get('https://www.google.com/shopping')
-    search_box = browser.find_element(By.NAME, 'q')
-    search_box.send_keys(query)
-    search_box.submit()
-
-    time.sleep(3)
-
-    opts = browser.find_elements(By.XPATH, "//div[@class='sFzvde gVNoLb']")
-
-    for option in opts:
-        name = option.find_element(By.XPATH, ".//h3").text
-        price = option.find_element(By.XPATH, ".//div[@class='W9yFB']/g-price").text
-        link = option.find_element(By.XPATH, ".//a").get_attribute("href")
-
-
-    time.sleep(2)
-
-# instacartData('75012', 'arugula')
-
-
-
-def getZIP(latitude, longitude):
-    latitude = str(latitude)
-    longitude = str(longitude)
-
-    api = f"https://nominatim.openstreetmap.org/reverse?format=json&lat={latitude}&lon={longitude}"
-    
-    data = requests.get(api)
-    data = data.json()
-    zip = data["address"].get("postcode", "")
-    return zip
-
+    # return output + ["instacart.com", "$3.00"]
+    return output + instacartData(zip, food)
 
 
 def findAlts(text):
@@ -212,33 +170,10 @@ def singleWordFood(text):
 
 # done
 
-def initializeHashMap():
-    
-    # reading database + converting to hashmap
-    df = pd.read_excel('./food_option_names.xlsx')
-    global hash
-    for index, row in df.iterrows():
-        # # print(row['Food'])
-        hash[(row['Food'].rstrip())] = row['gCO2e']
-    
-    # setting initialized variable to true for isHashInit()
-    global isInit 
-    isInit = True
-
-    # creating set of foods for easier scraping later
-    global foods
-    foods = set(hash.keys())
-    
-    # TODO: implement wikipedia webscraping for future webscraping use
-
-# done
-def isHashInit():
-    return isInit
-
 def instacartData(zipCode, food):
-    query = "buy " + food + " near " + zipCode + " instacart"
-    # print(query)
-    # browser.quit()
+    query = "buy " + str(food) + " near " + str(zipCode) + " instacart"
+    
+
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     browser = webdriver.Chrome(options=options)
@@ -248,34 +183,25 @@ def instacartData(zipCode, food):
     search_box.send_keys(query)
     search_box.submit()
 
-    opts = browser.find_elements(By.XPATH, "//a[@href]")
-    # # print(opts)
-    # # print(len(opts))
-    # # print(len(opts))
-    ourLink = ""
-    for option in opts:
-        #name = option.find_element(By.XPATH, "").text
-        #price = option.find_element(By.XPATH, "").text
-        link = option.get_attribute("href")
-        if "instacart" in link and "url?url" in link:
-            # print(link)
-            ourLink = link
-            break 
-        ## print(name)
-        ## print(price)
-    # print(ourLink)
-    options1 = webdriver.ChromeOptions()
-    options1.add_argument('--headless')
-    browser1 = webdriver.Chrome(options=options)
+    # print(browser.current_url)
+    # soup = BeautifulSoup(html, 'html.parser')
 
-    browser1.get(ourLink)
-    price = browser1.find_element(By.ID, "regular_price").text
-    # search_box = browser.find_element(By.NAME, 'q')
-    # search_box.send_keys(query)
-    # search_box.submit()
+    # response = requests.get(browser.current_url)
+    soup = BeautifulSoup(requests.get(browser.current_url).text, 'html.parser')
 
-    # time.sleep(3)
-    output = [ourLink, price]
+    dollar_symbols = soup.find_all(text=lambda text: '$' in text)
+
+    index = len(dollar_symbols) - 1
+
+    endIndex = len(dollar_symbols) - 1
+
+    while index != 0 and 'Up to' not in dollar_symbols[index]:
+        index = index - 1
+        if 'Over' in dollar_symbols[index]:
+            endIndex = index + 1
+    dollar_symbols = dollar_symbols[index:endIndex]
+
+    output = ['shopping.google.com', str(dollar_symbols[int((len(dollar_symbols) + 1) / 2) - 1])]
     return output
 
 
@@ -293,8 +219,8 @@ def getZIP(latitude, longitude):
     return zip
 
 initializeHashMap()
+
+# print(findAlts('olive oil'))
+# 78712
 print(evalFood("olive oil", str(30.2849), str(-97.7341)))
-
-    
-
-
+# print(instacartData(78712, 'Lentils'))
