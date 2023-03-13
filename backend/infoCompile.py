@@ -65,6 +65,7 @@ def evalFood(text, strlatitude, strlongitude):
 
     food = ""
 
+    # find alt with lowest carbon footprint
     for i in alts:
         if hash.get(i) < lowFoot:
             food = i
@@ -78,7 +79,7 @@ def evalFood(text, strlatitude, strlongitude):
 
     zip = getZIP(strlatitude, strlongitude)
 
-    # return output + ["instacart.com", "$3.00"]
+    # get shopping data for alt
     return output + instacartData(zip, food)
 
 
@@ -86,11 +87,9 @@ def findAlts(text):
     output = []
     if text.find(" ") == -1:
         output = singleWordFood(text)
-        # print(output)
         return output
     else:
         output = multiWordFood(text)
-        # print(output)
         return output
 
 
@@ -134,7 +133,7 @@ def singleWordFood(text):
     allText = "".join([tag.text for tag in soup.find_all()])
 
   
-
+    # filter through text to find possible matches (nouns, etc)
     tokens = nltk.word_tokenize(allText)
     tagged = nltk.pos_tag(tokens)
 
@@ -153,27 +152,16 @@ def singleWordFood(text):
             posAlt = " ".join(word for word, pos in chunk.leaves())
             posAlt = posAlt[0].upper() + posAlt[1:]
             posAlt = posAlt.rstrip()
-            # posAlt = posAlt.lstrip()
-            # if "Tofu" in posAlt:
-            #     break
-            # # print(posAlt)
             if posAlt != formattedText and hash.get(posAlt) is not None:
                 
                 if (posAlt not in output):
                     output.append(posAlt)
     return output
-    if len(output) != 0:
-        return output
-    else:
-        # TODO: get wikipedia scraping done
-        return output
-
-# done
 
 def instacartData(zipCode, food):
     query = "buy " + str(food) + " near " + str(zipCode) + " instacart"
     
-
+    # find options for food
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     browser = webdriver.Chrome(options=options)
@@ -183,10 +171,7 @@ def instacartData(zipCode, food):
     search_box.send_keys(query)
     search_box.submit()
 
-    # print(browser.current_url)
-    # soup = BeautifulSoup(html, 'html.parser')
-
-    # response = requests.get(browser.current_url)
+    # find all text w/ $ signs 
     soup = BeautifulSoup(requests.get(browser.current_url).text, 'html.parser')
 
     dollar_symbols = soup.find_all(text=lambda text: '$' in text)
@@ -195,6 +180,7 @@ def instacartData(zipCode, food):
 
     endIndex = len(dollar_symbols) - 1
 
+    # comput 'average'
     while index != 0 and 'Up to' not in dollar_symbols[index]:
         index = index - 1
         if 'Over' in dollar_symbols[index]:
@@ -217,10 +203,3 @@ def getZIP(latitude, longitude):
     data = data.json()
     zip = data["address"].get("postcode", "")
     return zip
-
-initializeHashMap()
-
-# print(findAlts('olive oil'))
-# 78712
-print(evalFood("olive oil", str(30.2849), str(-97.7341)))
-# print(instacartData(78712, 'Lentils'))
